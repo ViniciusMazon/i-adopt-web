@@ -1,0 +1,57 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "organization": "admin",
+      "first_name": "admin",
+      "last_name": "admin",
+      "email": "admin@admin.com",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "organization": "PetsRescue",
+      "first_name": "Vinicius",
+      "last_name": "Mazon",
+      "email": "viniciusmazon@gmail.com",
+      "password": "abc123"
+    },
+    {
+      "id": 1582727750452,
+      "organization": "Shelter of Pets",
+      "first_name": "Lucas",
+      "last_name": "Montano",
+      "email": "lucas@montano.com",
+      "password": "123"
+    }
+  ],
+  "pets": [
+    {
+      "id": 1582486087322,
+      "name": "KitCat",
+      "specie": "cat",
+      "gender": "male",
+      "size": "medium",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-2-23"
+    },
+    {
+      "id": 1582759648389,
+      "name": "Nutella",
+      "specie": "dog",
+      "gender": "male",
+      "size": "small",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-2-26"
+    },
+    {
+      "id": 1582770449222,
+      "name": "TesteUS",
+      "specie": "dog",
+      "gender": "female",
+      "size": "medium",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-2-26"
+    }
+  ]
+}

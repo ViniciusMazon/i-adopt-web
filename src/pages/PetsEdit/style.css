@@ -1,0 +1,181 @@
+.modalDelete-container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalDelete-content {
+  width: 450px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #FBFAF9;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+
+.modalDelete-icon {
+  font-size: 30px;
+  color: #DDD;
+  margin-right: 5%;
+}
+
+.modalDelete-content p {
+  margin-top: 35px;
+  width: 90%;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  color: #333;
+}
+
+.modalDelete-content button {
+  width: 225px;
+  height: 40px;
+  font-size: 16px;
+  color: #333;
+  background: #FBFAF9;
+  border: none;
+  cursor: pointer;
+  border-radius: 0 0 6px 6px;
+}
+
+.modalDelete-content button:hover {
+  background: #DDD;
+}
+
+.petsEdit-delete {
+  width: 40px;
+  height: 40px;
+  background-color: #FFF;
+  border: none;
+  border-radius: 100%;
+  box-shadow: 0px 0px 6px rgba(51, 51, 51, 0.3);
+  margin-right: 30px;
+}
+
+.petsEdit-delete:hover {
+  background: #DDD;
+}
+
+.deleteIcon {
+  font-weight: 900;
+  font-size: 16px;
+  color: #F67280;
+}
+
+.petsEdit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.petsEdit-container form span {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.petsEdit-container form {
+  height: 650px;
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #333333;
+}
+
+#aqui-vai-foto {
+  width: 136px;
+  height: 136px;
+  background: #ddd;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  border-radius: 100%;
+}
+
+.petsEdit-options {
+  width: 360px;
+}
+
+.petsEdit-container form input[type="text"] {
+  width: 360px;
+  height: 45px;
+  border: none;
+  border-bottom: 1px solid #333;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #333;
+}
+
+.petsEdit-container form input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.petsEdit-icon {
+  width: 15px;
+  height: 17px;
+  color: #333333;
+  margin-right: 5px;
+}
+
+.petsEdit-options p {
+  margin-top: 30px;
+}
+
+.petsEdit-options label {
+  margin-right: 30px;
+}
+
+.petsEdit-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.petsEdit-buttons button {
+  width: 360px;
+  height: 50px;
+  background: #118696;
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  border: none;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.petsEdit-buttons button:hover {
+  background: #0b616d;
+}
+
+#petsEdit-container-btnCancel {
+  background: #FF9999;
+}
+
+#petsEdit-container-btnCancel:hover {
+  background: rgb(197, 118, 118);
+}
+
+

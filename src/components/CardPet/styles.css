@@ -1,0 +1,116 @@
+.card-container {
+  width: 300px;
+  height: 165px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.card-container p {
+  margin: 4px;
+}
+
+.card-header {
+
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  padding: 0 10px 0 10px;
+  color: rgb(170, 169, 169);
+  border-bottom: 1px solid #DDDDDD;
+  margin-top: 8px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10px 15px 10px 15px;
+}
+
+.card-body div {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.card-body img {
+  width: 90px;
+  height: 90px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 100%;
+  margin-right: 20px;
+}
+
+.card-body h3 {
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+  margin: 0;
+}
+
+.card-body div span {
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+
+.card-body div span p {
+  margin-right: 10px;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.card-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 29px;
+  background: rgba(221, 221, 221, 0.3);
+  border-radius: 0px 0px 6px 6px;
+}
+
+.card-footer button {
+  width: 28px;
+  height: 40px;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #666;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#application {
+  color: #F67280;
+  margin-right: 40px;
+}
