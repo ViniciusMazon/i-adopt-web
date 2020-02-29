@@ -31,8 +31,11 @@
 }
 
 .menuBar-content button:hover {
-  background-color: #ddd;
-  transition: .5s;
+  background-color: #F67280;
+}
+
+.menuBar-content button:hover .menuBar-icon {
+  color: #FFFFFF;
 }
 
 .filterAndSearch-container {
