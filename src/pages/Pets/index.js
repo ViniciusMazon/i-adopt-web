@@ -24,10 +24,10 @@ export default function Pets() {
   }, []);
 
 
-  async function search(filterName) {
+  async function search(searchName) {
 
-    if (filterName) {
-      const response = await axios.get(`http://localhost:4000/pets/?name=${filterName}`);
+    if (searchName) {
+      const response = await axios.get(`http://localhost:4000/pets/?name=${searchName}`);
       setPets(response.data);
     } else {
       const response = await axios.get('http://localhost:4000/pets');

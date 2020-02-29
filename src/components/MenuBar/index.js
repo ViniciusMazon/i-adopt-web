@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSlidersH, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSlidersH, faSearch, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import './styles.css';
 import Filter from '../Filter';
-import Search from '../Search';
 
-export default function MenuBar() {
+export default function MenuBar({ search }) {
 
   const [filterStatus, setFilterStatus] = useState(false);
   const [searchStatus, setSearchStatus] = useState(false);
+  const [searchName, setSearchName] = useState('');
 
-
-  function handleSearch() {
+  function changeSearchStatus() {
     if (filterStatus) {
       setFilterStatus(false);
     }
@@ -21,7 +20,7 @@ export default function MenuBar() {
     setSearchStatus(!searchStatus)
   }
 
-  function handleFilter() {
+  function changeFilterStatus() {
     if (searchStatus) {
       setSearchStatus(false);
     }
@@ -29,27 +28,39 @@ export default function MenuBar() {
     setFilterStatus(!filterStatus)
   }
 
+  function handleSearch() {
+    search(searchName);
+  }
+
   return (
     <div className="menuBar-container">
       <div className="menuBar-content">
 
-
-        <button type="button" onClick={handleFilter}>
+        <button type="button" onClick={changeFilterStatus}>
           <FontAwesomeIcon icon={faSlidersH} className="menuBar-icon" />
         </button>
 
-        <button onClick={handleSearch} className="menuBar-icon">
+        <button onClick={changeSearchStatus} className="menuBar-icon">
           <FontAwesomeIcon icon={faSearch} className="menuBar-icon" />
         </button>
       </div>
+
       <div className="filterAndSearch-container">
+
         {
           filterStatus ? <Filter /> : null
         }
-        {
-          searchStatus ? <Search /> : null
-        }
 
+        {
+          !searchStatus ? null : (
+            <div className="search-container">
+              <input type="text" placeholder="Name..." value={searchName} onChange={e => setSearchName(e.target.value)} />
+              <button>
+                <FontAwesomeIcon icon={faAngleRight} className="search-icon" onClick={handleSearch}/>
+              </button>
+            </div>
+          )
+        }
       </div>
     </div>
   );
