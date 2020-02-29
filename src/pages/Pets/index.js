@@ -11,7 +11,9 @@ import CardPet from '../../components/CardPet';
 
 
 export default function Pets() {
+
   const [pets, setPets] = useState([]);
+  const [temp, setTemp] = useState([]);
 
 
   useEffect(() => {
@@ -24,18 +26,18 @@ export default function Pets() {
   }, []);
 
 
-  async function search(searchName) {
-
+  function search(searchName) {
     if (searchName) {
-      const response = await axios.get(`http://localhost:4000/pets/?name=${searchName}`);
-      setPets(response.data);
+      const searchResult = pets.filter(pet => pet.name === searchName);
+      if (searchResult.length >= 1) {
+        setTemp(pets);
+        setPets(searchResult);
+      }
     } else {
-      const response = await axios.get('http://localhost:4000/pets');
-      setPets(response.data);
+      setPets(temp);
+      setTemp([])
     }
   }
-
-  //deve filtrar um pet por specie, genero ou tamanho
 
   return (
     <div className="pets-container">
@@ -43,7 +45,10 @@ export default function Pets() {
       <Navigation linkPath={'/home'} />
       <MenuBar search={search} />
       <div className="pets-cards">
-      <CardCreatePet />
+
+        {
+          temp.length === 0 ? <CardCreatePet /> : null
+        }
 
         {
           pets.map(pet => (

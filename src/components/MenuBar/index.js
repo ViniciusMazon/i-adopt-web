@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH, faSearch, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ export default function MenuBar({ search }) {
   const [filterStatus, setFilterStatus] = useState(false);
   const [searchStatus, setSearchStatus] = useState(false);
   const [searchName, setSearchName] = useState('');
+
 
   function changeSearchStatus() {
     if (filterStatus) {
@@ -56,7 +57,7 @@ export default function MenuBar({ search }) {
             <div className="search-container">
               <input type="text" placeholder="Name..." value={searchName} onChange={e => setSearchName(e.target.value)} />
               <button>
-                <FontAwesomeIcon icon={faAngleRight} className="search-icon" onClick={handleSearch}/>
+                <FontAwesomeIcon icon={faAngleRight} className="search-icon" onClick={handleSearch} />
               </button>
             </div>
           )
