@@ -1,10 +1,10 @@
-import React from 'react';
+import React,  { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles.css';
 import logo from '../../assets/logo.png';
-import { useState } from 'react';
+
 
 export default function Login() {
 
@@ -23,12 +23,17 @@ export default function Login() {
   }
 
   return (
+
     <div className="login-container">
-      <img src={logo} alt="" />
-      <input type="email" placeholder="Email" value={emailVerification} onChange={e => setEmailVerification(e.target.value)} />
-      <input type="password" placeholder="Password" value={passwordVerification} onChange={e => setPasswordVerification(e.target.value)} />
-      <button type="button" onClick={auth}>Ok</button>
-      <Link to="/singup">Don't have an account?</Link>
+      <div className="login-image" />
+
+      <div className="login-content">
+        <img id="logo" src={logo} alt="" />
+        <input type="email" placeholder="Email" value={emailVerification} onChange={e => setEmailVerification(e.target.value)} />
+        <input type="password" placeholder="Password" value={passwordVerification} onChange={e => setPasswordVerification(e.target.value)} />
+        <button type="button" onClick={auth}>Ok</button>
+        <Link to="/singup">Don't have an account?</Link>
+      </div>
     </div>
   );
 }

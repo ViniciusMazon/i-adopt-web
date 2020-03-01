@@ -28,7 +28,7 @@
   "pets": [
     {
       "id": 1582486087322,
-      "name": "KitCat",
+      "name": "KitKat",
       "specie": "cat",
       "gender": "male",
       "size": "medium",
@@ -55,7 +55,7 @@
     },
     {
       "id": 1583093335808,
-      "name": "KinderOvo",
+      "name": "Kinder Ovo",
       "specie": "dog",
       "gender": "female",
       "size": "small",
@@ -64,10 +64,19 @@
     },
     {
       "id": 1583093348024,
-      "name": "OvoMaltine",
+      "name": "Ovo Maltine",
       "specie": "cat",
       "gender": "male",
       "size": "medium",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-3-1"
+    },
+    {
+      "id": 1583094915998,
+      "name": "Ice Cream",
+      "specie": "dog",
+      "gender": "female",
+      "size": "big",
       "avatar": "./src/assets/avatar.png",
       "date": "2020-3-1"
     }
