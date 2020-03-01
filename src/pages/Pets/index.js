@@ -13,8 +13,7 @@ import CardPet from '../../components/CardPet';
 export default function Pets() {
 
   const [pets, setPets] = useState([]);
-  const [temp, setTemp] = useState([]);
-
+  const [searchAndFilter, setSearchAndFilter] = useState([]);
 
   useEffect(() => {
     async function initPetPage() {
@@ -25,35 +24,60 @@ export default function Pets() {
     initPetPage();
   }, []);
 
-
   function search(searchName) {
     if (searchName) {
       const searchResult = pets.filter(pet => pet.name === searchName);
       if (searchResult.length >= 1) {
-        setTemp(pets);
-        setPets(searchResult);
+        setSearchAndFilter(searchResult);
       }
     } else {
-      setPets(temp);
-      setTemp([])
+      setSearchAndFilter([])
     }
+  }
+
+  function filter(filters) {
+    setSearchAndFilter([]);
+    var result = [];
+
+    if (filters.specie) {
+      result.length !== 0 ? result = result.filter(pet => pet.specie === filters.specie) : result = pets.filter(pet => pet.specie === filters.specie);
+    }
+
+    if (filters.gender) {
+      result.length !== 0 ? result = result.filter(pet => pet.gender === filters.gender) : result = pets.filter(pet => pet.gender === filters.gender);
+    }
+
+    if (filters.size) {
+      result.length !== 0 ? result = result.filter(pet => pet.size === filters.size) : result = pets.filter(pet => pet.size === filters.size);
+    }
+
+    setSearchAndFilter(result);
+  }
+
+  function closeFilterAndSearch() {
+    setSearchAndFilter([]);
   }
 
   return (
     <div className="pets-container">
       <Header />
       <Navigation linkPath={'/home'} />
-      <MenuBar search={search} />
+      <MenuBar search={search} filter={filter} closeFilterAndSearch={closeFilterAndSearch} />
       <div className="pets-cards">
 
         {
-          temp.length === 0 ? <CardCreatePet /> : null
+          searchAndFilter.length === 0 ? <CardCreatePet /> : null
         }
 
         {
-          pets.map(pet => (
-            <CardPet key={pet.id} data={pet} avatarTemp={avatarTemp} />
-          ))
+          searchAndFilter.length > 0 ? (
+            searchAndFilter.map(pet => (
+              <CardPet key={pet.id} data={pet} avatarTemp={avatarTemp} />
+            ))) : (
+              pets.map(pet => (
+                <CardPet key={pet.id} data={pet} avatarTemp={avatarTemp} />
+              ))
+            )
         }
       </div>
     </div>

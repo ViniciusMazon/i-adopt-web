@@ -58,7 +58,6 @@
   background: #FFFFFF;
   border: 1px solid #DDDDDD;
   box-sizing: border-box;
-  border-radius: 100px 0px 0px 100px;
   font-family: 'Roboto', 'Arial', sans-serif;
   font-size: 16px;
   margin-right: 5px;
@@ -95,10 +94,6 @@
   color: #666;
 }
 
-#select-specie {
-  border-radius: 100px 0px 0px 100px;
-}
-
 .filter-container button {
   width: 34px;
   height: 30px;
@@ -111,4 +106,10 @@
 .filter-icon {
   font-size: 16px;
   color: #666;
+}
+
+
+#close-button {
+  border-radius: 100px 0px 0px 100px;
+  margin-right: 5px;
 }
