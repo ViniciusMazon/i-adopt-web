@@ -17,7 +17,8 @@ export default function Login() {
     const response = await axios.get(`http://localhost:4000/users?email=${emailVerification}`);
 
     if (response.data[0].password === passwordVerification) {
-      history.push(`/home/${response.data[0].first_name}`);
+      sessionStorage.setItem('IAdopt_userName', response.data[0].first_name)
+      history.push('/home');
     }
   }
 

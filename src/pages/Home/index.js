@@ -18,7 +18,7 @@ export default function Home({ match }) {
       setPets(response.data);
     }
 
-    setUserName(match.params.first_name)
+    setUserName(sessionStorage.getItem('IAdopt_userName'))
     getPets()
   }, []);
 

@@ -15,7 +15,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/singup" component={SingUp} />
-          <Route path="/home/:first_name" component={Home} />
+          <Route path="/home" component={Home} />
           <Route exact path="/pets" component={Pets} />
           <Route path="/pets/new" component={PetsCreate} />
           <Route path="/pets/:id" component={PetsEdit} />
