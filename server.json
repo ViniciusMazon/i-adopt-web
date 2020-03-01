@@ -45,13 +45,31 @@
       "date": "2020-2-26"
     },
     {
-      "id": 1582770449222,
-      "name": "TesteUS",
+      "id": 1583093312371,
+      "name": "M&Ms",
+      "specie": "cat",
+      "gender": "female",
+      "size": "small",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-3-1"
+    },
+    {
+      "id": 1583093335808,
+      "name": "KinderOvo",
       "specie": "dog",
       "gender": "female",
+      "size": "small",
+      "avatar": "./src/assets/avatar.png",
+      "date": "2020-3-1"
+    },
+    {
+      "id": 1583093348024,
+      "name": "OvoMaltine",
+      "specie": "cat",
+      "gender": "male",
       "size": "medium",
       "avatar": "./src/assets/avatar.png",
-      "date": "2020-2-26"
+      "date": "2020-3-1"
     }
   ]
 }

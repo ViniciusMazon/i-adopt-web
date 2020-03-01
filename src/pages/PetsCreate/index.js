@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCat, faDog, faMale, faFemale, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
+import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
 
 
 import './style.css';
@@ -71,11 +71,11 @@ export default function PetsCreate() {
             <div>
 
               <input type="radio" id="gender-female" name="gender" value={"female"} onChange={e => setGender(e.target.value)} />
-              <FontAwesomeIcon icon={faFemale} className="petsCreate-icon" />
+              <FontAwesomeIcon icon={faVenus} className="petsCreate-icon" />
               <label htmlFor="gender-female">Female</label>
 
               <input type="radio" id="gender-male" name="gender" value={"male"} onChange={e => setGender(e.target.value)} />
-              <FontAwesomeIcon icon={faMale} className="petsCreate-icon" />
+              <FontAwesomeIcon icon={faMars} className="petsCreate-icon" />
               <label htmlFor="gender-male">Male</label>
 
             </div>

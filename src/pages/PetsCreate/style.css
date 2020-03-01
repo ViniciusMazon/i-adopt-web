@@ -43,10 +43,11 @@
 }
 
 .petsCreate-container form input[type="radio"] {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-right: 10px;
 }
+
 
 .petsCreate-icon {
   width: 15px;

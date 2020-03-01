@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationCircle, faCat, faDog, faMale, faFemale, faRulerVertical, faEraser } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle, faCat, faDog, faMars, faVenus, faRulerVertical, faEraser } from '@fortawesome/free-solid-svg-icons'
 
 
 import './style.css';
@@ -110,11 +110,11 @@ export default function PetsEdit({ match }) {
             <p>Gender</p>
             <div>
               <input type="radio" id="gender-female" name="gender" value={"female"} onChange={e => setGender(e.target.value)} checked={gender === 'female' ? true : false} />
-              <FontAwesomeIcon icon={faFemale} className="petsEdit-icon" />
+              <FontAwesomeIcon icon={faVenus} className="petsEdit-icon" />
               <label htmlFor="gender-female">Female</label>
 
               <input type="radio" id="gender-male" name="gender" value={"male"} onChange={e => setGender(e.target.value)} checked={gender === 'male' ? true : false} />
-              <FontAwesomeIcon icon={faMale} className="petsEdit-icon" />
+              <FontAwesomeIcon icon={faMars} className="petsEdit-icon" />
               <label htmlFor="gender-male">Male</label>
             </div>
 

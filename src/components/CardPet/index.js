@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCat, faDog, faMale, faFemale, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
+import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css';
 
@@ -31,7 +31,7 @@ export default function CardPet({ data, avatarTemp }) {
           </span>
           <h3>{name}</h3>
           <span>
-            <FontAwesomeIcon icon={gender === 'male' ? faMale : faFemale} className="cardpet-icon icon" />
+            <FontAwesomeIcon icon={gender === 'male' ? faMars : faVenus} className="cardpet-icon icon" />
             <p>{gender}</p>
             <FontAwesomeIcon icon={faRulerVertical} className="cardpet-icon icon" />
             <p>{size}</p>

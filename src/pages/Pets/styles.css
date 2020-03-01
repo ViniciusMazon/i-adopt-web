@@ -6,8 +6,8 @@
 }
 
 .pets-cards {
-  margin-top: 90px;
-  max-width: 1200px;
+  margin-top: 50px;
+  max-width: 1280px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
