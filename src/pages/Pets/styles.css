@@ -1,4 +1,6 @@
 .pets-container {
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -7,10 +9,17 @@
 
 .pets-cards {
   margin-top: 50px;
-  max-width: 1280px;
+  width: 90%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 450px) {
+  .pets-cards {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
 }

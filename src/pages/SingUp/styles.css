@@ -2,27 +2,35 @@
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  font-size: 16px;
+  align-items: center;
+}
+
+.singup-image {
+  width: 50%;
+  height: 100%;
+  background: url(../../assets/bg.png) no-repeat;
+  background-size: cover;
 }
 
 .singup-content {
-  margin-top: 5%;
-  width: 400px;
-  height: 800px;
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 .singup-content input {
   width: 400px;
-  height: 45px;
+  height: 40px;
   border: none;
   font-size: 16px;
   color: #333;
   border-bottom: 1px solid #333333;
+  margin-bottom: 10px;
 }
 
 .singup-content input[type="checkbox"] {
@@ -46,13 +54,14 @@
 }
 
 .singup-content p {
+  width: 60%;
   text-align: center;
   columns: #333;
 }
 
 .singup-content button {
-  margin-top: 30px;
-  width: 100%;
+  margin-top: 20px;
+  width: 60%;
   height: 45px;
   left: 555px;
   top: 538px;
@@ -66,8 +75,31 @@
   font-size: 18px;
   color: #FFFFFF;
   cursor: pointer;
+  margin-bottom: 30px;
 }
 
 .singup-content button:hover {
   background: rgb(202, 89, 100);
+}
+
+@media (max-width: 450px) {
+  .singup-content {
+    width: 90%;
+  }
+  .singup-content input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .singup-image {
+    visibility: hidden;
+    width: 0%;
+  }
+  .singup-content p {
+    width: 100%;
+  }
+  .singup-content button {
+    width: 100%;
+  }
 }

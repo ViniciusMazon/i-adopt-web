@@ -53,6 +53,8 @@ export default function SingUp() {
 
   return (
     <div className="singup-container">
+      <div className="singup-image" />
+
       <form onSubmit={handleSubmit} className="singup-content">
         <Navigation linkPath="/" />
         <input type="text" placeholder="Organization name" value={organization} onChange={e => setOrganization(e.target.value)} />

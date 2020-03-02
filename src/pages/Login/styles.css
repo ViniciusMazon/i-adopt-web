@@ -7,16 +7,12 @@
   align-items: center;
 }
 
-
-
 .login-image {
   width: 50%;
   height: 100%;
   background: url(../../assets/bg.png) no-repeat;
   background-size: cover;
 }
-
-
 
 #logo {
   width: 253px;
@@ -72,4 +68,11 @@
 
 .login-content a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 450px) {
+  .login-image {
+    visibility: hidden;
+    width: 0%;
+  }
 }

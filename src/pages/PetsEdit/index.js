@@ -83,7 +83,7 @@ export default function PetsEdit({ match }) {
       <Header />
       <div className="petsEdit-container">
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={"petsEdit-content"}>
 
           <span>
             <Navigation linkPath={'/pets'} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDog, faStickyNote, faUserAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faDog, faStickyNote, faUserAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 import './styles.css';
 import logo from '../../assets/logo.png';
@@ -13,6 +13,10 @@ export default function Header() {
       <img src={logo} alt="" />
 
       <div className="header-options">
+        <Link to="/home">
+          <FontAwesomeIcon icon={faHome} className="header-icon" />
+          <p>Home</p>
+        </Link>
         <Link to="/pets">
           <FontAwesomeIcon icon={faDog} className="header-icon" />
           <p>Pets</p>
