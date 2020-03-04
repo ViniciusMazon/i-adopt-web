@@ -83,20 +83,17 @@
 }
 
 @media (max-width: 450px) {
-  .singup-content {
-    width: 90%;
-  }
-  .singup-content input {
-    width: 100%;
-  }
-}
-
-@media (max-width: 450px) {
   .singup-image {
     visibility: hidden;
     width: 0%;
   }
+  .singup-content {
+    width: 90%;
+  }
   .singup-content p {
+    width: 100%;
+  }
+  .singup-content input {
     width: 100%;
   }
   .singup-content button {

@@ -7,7 +7,7 @@
 }
 
 .petsCreate-container form {
-  width:360px;
+  width: 360px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,13 +20,23 @@
   color: #333333;
 }
 
-#aqui-vai-foto {
-  width: 40;
-  height: 40;
-  background: #ddd;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  border-radius: 100%;
+.image-upload {
+  /* width: 55px; */
+  width: 50%;
+  height: 70px;
+  /* background-color: tomato; */
+}
+
+.petsCreate-container input[type="file"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#icon-image-upladod {
+  font-size: 70px;
+  position: absolute;
+  z-index: -1;
 }
 
 .petsCreate-container form input[type="text"] {

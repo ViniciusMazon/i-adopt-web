@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css';
+import iconApplication from '../../assets/icon-application.png';
+import iconHouse from '../../assets/icon-house.png';
+import iconDog from '../../assets/icon-dog.png';
+import iconCat from '../../assets/icon-cat.png';
+
 import Header from '../../components/Header';
 
 export default function Home({ match }) {
 
   const [userName, setUserName] = useState('');
   const [pets, setPets] = useState([]);
-  const [dogs, setDogs] = useState(0);
-  const [cats, setCats] = useState(0);
+  const [dogsInfo, setDogsInfo] = useState({});
+  const [catsInfo, setCatsInfo] = useState({});
+
 
 
   useEffect(() => {
@@ -24,11 +32,76 @@ export default function Home({ match }) {
 
   useEffect(() => {
     function createStatistics() {
-      let dog = 0;
-      let cat = 0;
-      pets.map(pet => pet.specie === 'dog' ? dog++ : cat++);
-      setDogs(dog);
-      setCats(cat);
+      let dog = {
+        total: 0,
+        male: 0,
+        female: 0,
+        small: 0,
+        medium: 0,
+        big: 0
+      }
+
+      let cat = {
+        total: 0,
+        male: 0,
+        female: 0,
+        small: 0,
+        medium: 0,
+        big: 0
+      }
+
+      pets.map(pet => {
+        if (pet.specie === 'dog') {
+
+          dog.total++;
+
+          if (pet.gender === 'male') {
+            dog.male++;
+          } else {
+            dog.female++;
+          }
+
+          switch (pet.size) {
+            case 'small':
+              dog.small++;
+              break;
+            case 'medium':
+              dog.medium++;
+              break;
+            case 'big':
+              dog.big++;
+              break;
+            default:
+              console.log('erro na estatistica de dog size')
+          }
+        } else {
+
+          cat.total++;
+
+          if (pet.gender === 'male') {
+            cat.male++;
+          } else {
+            cat.female++;
+          }
+
+          switch (pet.size) {
+            case 'small':
+              cat.small++;
+              break;
+            case 'medium':
+              cat.medium++;
+              break;
+            case 'big':
+              cat.big++;
+              break;
+            default:
+              console.log('erro na estatistica de cat size')
+          }
+        }
+      });
+
+      setDogsInfo(dog);
+      setCatsInfo(cat);
     }
 
     createStatistics();
@@ -39,32 +112,84 @@ export default function Home({ match }) {
       <Header />
       <div className="home-container">
         <div className="home-content">
-
-
-          <h1>Welcome, {userName}!</h1>
-
-          <h2>Pets</h2>
           <div className="board-container">
-            <div className="board">
-              <p>{dogs}</p>
-              <p>Dogs</p>
-            </div>
-            <div className="board">
-              <p>{cats}</p>
-              <p>Cats</p>
-            </div>
-          </div>
 
-          <h2>Applications</h2>
-          <div className="board-container">
-            <div className="board">
-              <p>80</p>
-              <p>Aproved</p>
-            </div>
-            <div className="board">
-              <p>20</p>
-              <p>Unread</p>
-            </div>
+            <h1>Hey {userName}, look at this!</h1>
+
+            <span>
+              <h2>Your applications</h2>
+              <div className="board-content">
+
+                <div className="board">
+                  <img src={iconHouse} className="board-icon" />
+                  <strong className="board-numbers">INOP</strong>
+                  <p>Pets adopted</p>
+                </div>
+
+                <div className="board">
+                  <img src={iconApplication} className="board-icon" />
+                  <strong className="board-numbers">INOP</strong>
+                  <p>Pending applications</p>
+                </div>
+              </div>
+            </span>
+
+            <span>
+              <h2>Your pets</h2>
+              <div className="board-content">
+
+                <div className="board">
+                  <div>
+                    <img src={iconDog} className="board-icon" />
+                  </div>
+                  <div>
+                    <span>
+                      <strong className="board-numbers">{dogsInfo.total}</strong>
+                      <p>Dogs</p>
+                    </span>
+                    <span className="board-gender">
+                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
+                      <p>{dogsInfo.female}</p>
+                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
+                      <p>{dogsInfo.male}</p>
+                    </span>
+                    <span className="board-size">
+                      <strong className="board-size-emphasis">S</strong>
+                      <p>{dogsInfo.small}</p>
+                      <strong className="board-size-emphasis">M</strong>
+                      <p>{dogsInfo.medium}</p>
+                      <strong className="board-size-emphasis">B</strong>
+                      <p>{dogsInfo.big}</p>
+                    </span>
+                  </div>
+                </div>
+                <div className="board">
+                  <div>
+                    <img src={iconCat} className="board-icon" />
+                  </div>
+                  <div>
+                    <span>
+                      <strong className="board-numbers">{catsInfo.total}</strong>
+                      <p>Cats</p>
+                    </span>
+                    <span className="board-gender">
+                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
+                      <p>{catsInfo.female}</p>
+                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
+                      <p>{catsInfo.male}</p>
+                    </span>
+                    <span className="board-size">
+                      <strong className="board-size-emphasis">S</strong>
+                      <p>{catsInfo.small}</p>
+                      <strong className="board-size-emphasis">M</strong>
+                      <p>{catsInfo.medium}</p>
+                      <strong className="board-size-emphasis">B</strong>
+                      <p>{catsInfo.big}</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </span>
           </div>
         </div>
       </div>

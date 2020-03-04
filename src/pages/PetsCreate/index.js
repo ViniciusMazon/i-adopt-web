@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
+import { faCat, faDog, faMars, faVenus, faRulerVertical, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 
 
 import './style.css';
@@ -52,7 +52,13 @@ export default function PetsCreate() {
       <div className="petsCreate-container">
         <form onSubmit={handleSubmit}>
           <Navigation linkPath={'/pets'} />
-          <div id="aqui-vai-foto"></div>
+
+          <div className="image-upload">
+            <FontAwesomeIcon icon={faFileUpload} id="icon-image-upladod" />
+            <input type="file" name="upload" />
+            <p>Choose the best photo</p>
+          </div>
+
           <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
           <div className="petsCreate-options">
             <p>Specie</p>
