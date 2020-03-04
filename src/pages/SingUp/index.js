@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import passwordValidator from 'password-validator';
 import { useHistory } from 'react-router-dom';
 
 import './styles.css';
 import Navigation from '../../components/Navigation';
+import ErrorBaloon from '../../components/ErrorBallon';
 
 export default function SingUp() {
 
@@ -18,7 +20,43 @@ export default function SingUp() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [terms, setTerms] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
+
+  function validator(data) {
+    const { } = data;
+    var schema = new passwordValidator();
+    schema
+      .is().min(8)
+      .is().max(100)
+      .has().uppercase()
+      .has().lowercase()
+      .has().digits()
+      .has().not().spaces();
+
+    if (!schema.validate(password)) {
+      setErrorMessage('Weak password');
+      return false;
+    }
+
+    if (password !== passwordConfirm) {
+      setErrorMessage('Passwords are not the same');
+      return false;
+    }
+
+    if (email !== emailConfirm) {
+      setErrorMessage('Emails are not the same');
+      return false;
+    }
+
+    if (terms === false) {
+      setErrorMessage('You need to accept the terms to continue');
+      return false;
+    }
+
+    return true;
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,23 +70,12 @@ export default function SingUp() {
       password,
     }
 
-    if (email !== emailConfirm) {
-      console.warn('Os emails precisam ser iguais')
-      return;
+    if (validator(data)) {
+      await axios.post("http://localhost:4000/users", data);
+      history.push('/');
+    } else {
+      setError(true);
     }
-
-    if (password !== passwordConfirm) {
-      console.warn('As senhas precisam ser iguais')
-      return;
-    }
-
-    if (terms === false) {
-      console.warn('Termo não aceito')
-      return
-    }
-
-    await axios.post("http://localhost:4000/users", data);
-    history.push('/');
   }
 
   return (
@@ -57,13 +84,18 @@ export default function SingUp() {
 
       <form onSubmit={handleSubmit} className="singup-content">
         <Navigation linkPath="/" />
-        <input type="text" placeholder="Organization name" value={organization} onChange={e => setOrganization(e.target.value)} />
-        <input type="text" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-        <input type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} />
-        <input type="email" placeholder="Your best email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="email" placeholder="Confirm your email" value={emailConfirm} onChange={e => setEmailConfirm(e.target.value)} />
-        <input type="password" placeholder="A strong password" value={password} onChange={e => setPassword(e.target.value)} />
-        <input type="password" placeholder="Confirm your password" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
+
+        {
+          error ? <ErrorBaloon message={errorMessage}/> : null
+        }
+
+        <input type="text" placeholder="Organization name" value={organization} onChange={e => setOrganization(e.target.value)} required />
+        <input type="text" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
+        <input type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} required />
+        <input type="email" placeholder="Your best email" value={email} onChange={e => setEmail(e.target.value)} required />
+        <input type="email" placeholder="Confirm your email" value={emailConfirm} onChange={e => setEmailConfirm(e.target.value)} required />
+        <input type="password" placeholder="A strong password" value={password} onChange={e => setPassword(e.target.value)} required />
+        <input type="password" placeholder="Confirm your password" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} required />
 
         <span>
           <input type="checkbox" name="termsAndConditions" onChange={e => setTerms(!terms)} />

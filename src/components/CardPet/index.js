@@ -1,15 +1,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
+import { faHandHoldingUsd, faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css';
 
 
-export default function CardPet({ data, avatarTemp }) {
+export default function CardPet({ data }) {
 
   let history = useHistory();
-  const { id, name, specie, gender, size, avatar, date } = data;
+
+  const { id, name, price, specie, gender, size, avatar, date } = data;
 
   function handleEdit() {
     history.push(`/pets/${id}`);
@@ -23,13 +24,15 @@ export default function CardPet({ data, avatarTemp }) {
       </div>
 
       <div className="card-body">
-        <img src={avatarTemp} alt="Pet picture" />
+        <img src={avatar} alt="Pet picture" />
         <div>
+          <h3>{name}</h3>
           <span>
             <FontAwesomeIcon icon={specie === 'dog' ? faDog : faCat} className="cardpet-icon icon" />
             <p>{specie}</p>
+            <FontAwesomeIcon icon={faHandHoldingUsd} className="cardpet-icon icon" />
+            <p>{price === '' ? 'free' : `US$${price}`}</p>
           </span>
-          <h3>{name}</h3>
           <span>
             <FontAwesomeIcon icon={gender === 'male' ? faMars : faVenus} className="cardpet-icon icon" />
             <p>{gender}</p>

@@ -14,6 +14,7 @@ export default function PetsEdit({ match }) {
   let history = useHistory();
   const [id, setId] = useState(0);
   const [name, setName] = useState('');
+  const [price, setPrice] = useState('')
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
@@ -27,6 +28,7 @@ export default function PetsEdit({ match }) {
       const data = response.data;
       setId(data.id);
       setName(data.name);
+      setPrice(data.price);
       setSpecie(data.specie);
       setGender(data.gender);
       setSize(data.size);
@@ -43,6 +45,7 @@ export default function PetsEdit({ match }) {
     const changes = {
       id,
       name,
+      price,
       specie,
       gender,
       size,
@@ -93,7 +96,9 @@ export default function PetsEdit({ match }) {
           </span>
 
           <div id="aqui-vai-foto"></div>
+
           <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} content={name} />
+          <input type="text" placeholder="Price. Leave it blank to indicate it's free" value={price} onChange={e => setPrice(e.target.value)} />
 
           <div className="petsEdit-options">
             <p>Specie</p>

@@ -15,11 +15,13 @@ export default function PetsCreate() {
 
   const [id, setId] = useState(parseInt(Date.now()));
   const [name, setName] = useState('');
+  const [price, setPrice] = useState('')
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
-  const [avatar, setAvatar] = useState("./src/assets/avatar.png");
+  const [avatar, setAvatar] = useState();
   const [date, setDate] = useState('');
+
 
   useEffect(() => {
     const dNow = new Date();
@@ -29,12 +31,15 @@ export default function PetsCreate() {
     setDate(`${year}-${month + 1}-${day}`)
   }, []);
 
+  async function handleAvatar(e) {}
+
   async function handleSubmit(e) {
     e.preventDefault();
 
     const data = {
       id,
       name,
+      price,
       specie,
       gender,
       size,
@@ -55,20 +60,22 @@ export default function PetsCreate() {
 
           <div className="image-upload">
             <FontAwesomeIcon icon={faFileUpload} id="icon-image-upladod" />
-            <input type="file" name="upload" />
+            <input type="file" accept='image/*' name="upload" webkitdirectory onChange={handleAvatar} />
             <p>Choose the best photo</p>
           </div>
 
-          <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+          <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/>
+          <input type="text" placeholder="Price. Leave it blank to indicate it's free" value={price} onChange={e => setPrice(e.target.value)} />
+
           <div className="petsCreate-options">
             <p>Specie</p>
             <div>
-              <input type="radio" id="specie-dog" name="specie" value={"dog"} onChange={e => setSpecie(e.target.value)} />
+              <input type="radio" id="specie-dog" name="specie" value={"dog"} onChange={e => setSpecie(e.target.value)} required/>
               <FontAwesomeIcon icon={faDog} className="petsCreate-icon" />
               <label htmlFor="specie-dog">Dog</label>
 
 
-              <input type="radio" id="specie-cat" name="specie" value={"cat"} onChange={e => setSpecie(e.target.value)} />
+              <input type="radio" id="specie-cat" name="specie" value={"cat"} onChange={e => setSpecie(e.target.value)} required/>
               <FontAwesomeIcon icon={faCat} className="petsCreate-icon" />
               <label htmlFor="specie-cat">Cat</label>
             </div>
@@ -76,11 +83,11 @@ export default function PetsCreate() {
             <p>Gender</p>
             <div>
 
-              <input type="radio" id="gender-female" name="gender" value={"female"} onChange={e => setGender(e.target.value)} />
+              <input type="radio" id="gender-female" name="gender" value={"female"} onChange={e => setGender(e.target.value)} required/>
               <FontAwesomeIcon icon={faVenus} className="petsCreate-icon" />
               <label htmlFor="gender-female">Female</label>
 
-              <input type="radio" id="gender-male" name="gender" value={"male"} onChange={e => setGender(e.target.value)} />
+              <input type="radio" id="gender-male" name="gender" value={"male"} onChange={e => setGender(e.target.value)} required/>
               <FontAwesomeIcon icon={faMars} className="petsCreate-icon" />
               <label htmlFor="gender-male">Male</label>
 
@@ -89,16 +96,16 @@ export default function PetsCreate() {
             <p>Size</p>
             <div>
 
-              <input type="radio" id="size-small" name="size" value={"small"} onChange={e => setSize(e.target.value)} />
+              <input type="radio" id="size-small" name="size" value={"small"} onChange={e => setSize(e.target.value)} required/>
               <FontAwesomeIcon icon={faRulerVertical} className="petsCreate-icon" />
               <label htmlFor="size-small">Small</label>
 
-              <input type="radio" id="size-medium" name="size" value={"medium"} onChange={e => setSize(e.target.value)} />
+              <input type="radio" id="size-medium" name="size" value={"medium"} onChange={e => setSize(e.target.value)} required/>
               <FontAwesomeIcon icon={faRulerVertical} className="petsCreate-icon" />
               <label htmlFor="size-medium">Medium</label>
 
 
-              <input type="radio" id="size-big" name="size" value={"big"} onChange={e => setSize(e.target.value)} />
+              <input type="radio" id="size-big" name="size" value={"big"} onChange={e => setSize(e.target.value)} required/>
               <FontAwesomeIcon icon={faRulerVertical} className="petsCreate-icon" />
               <label htmlFor="size-big">Big</label>
             </div>
