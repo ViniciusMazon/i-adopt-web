@@ -16,7 +16,6 @@
 }
 
 .card-header {
-
   height: 18px;
   display: flex;
   flex-direction: row;
@@ -31,7 +30,6 @@
   padding: 0 10px 0 10px;
   color: rgb(170, 169, 169);
   border-bottom: 1px solid #DDDDDD;
-  margin-top: 8px;
 }
 
 .card-body {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import './styles.css';
-import avatarTemp from '../../assets/dog-example.jpg';
 import Navigation from '../../components/Navigation';
 import MenuBar from '../../components/MenuBar';
 import CardCreatePet from '../../components/CardCreatePet';
@@ -71,10 +70,10 @@ export default function Pets() {
         {
           searchAndFilter.length > 0 ? (
             searchAndFilter.map(pet => (
-              <CardPet key={pet.id} data={pet} avatarTemp={avatarTemp} />
+              <CardPet key={pet.id} data={pet} />
             ))) : (
               pets.map(pet => (
-                <CardPet key={pet.id} data={pet} avatarTemp={avatarTemp} />
+                <CardPet key={pet.id} data={pet} />
               ))
             )
         }

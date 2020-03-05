@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHandHoldingUsd, faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css';
-
+import avatarDog from '../../assets/temp-avatar-dog.jpg';
+import avatarCat from '../../assets/temp-avatar-cat.jpg';
 
 export default function CardPet({ data }) {
 
@@ -24,7 +25,7 @@ export default function CardPet({ data }) {
       </div>
 
       <div className="card-body">
-        <img src={avatar} alt="Pet picture" />
+        <img src={specie === 'dog'? avatarDog : avatarCat} alt="Pet picture" />
         <div>
           <h3>{name}</h3>
           <span>
