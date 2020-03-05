@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
+import NavBar from '../src/components/NavBar';
 
 import Login from '../src/pages/Login';
 import SingUp from '../src/pages/SingUp'
@@ -14,6 +15,7 @@ import NotFound404 from '../src/pages/NotFound404';
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <Router>
         <Switch>
           <Route exact path="/" component={Login} />

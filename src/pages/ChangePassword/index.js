@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './styles.css';
-import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 
 export default function ChangePassword() {
@@ -59,8 +58,6 @@ export default function ChangePassword() {
   }
 
   return (
-    <>
-      <Header />
       <div className="accountPassword-container">
         <form onSubmit={handleSubmit} className={"accountPassword-content"}>
           <span>
@@ -74,7 +71,6 @@ export default function ChangePassword() {
           </div>
         </form>
       </div>
-    </>
   );
 }
 

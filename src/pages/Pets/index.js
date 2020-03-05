@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import './styles.css';
 import avatarTemp from '../../assets/dog-example.jpg';
-import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import MenuBar from '../../components/MenuBar';
 import CardCreatePet from '../../components/CardCreatePet';
@@ -61,7 +60,6 @@ export default function Pets() {
 
   return (
     <div className="pets-container">
-      <Header />
       <Navigation linkPath={'/home'} />
       <MenuBar search={search} filter={filter} closeFilterAndSearch={closeFilterAndSearch} />
       <div className="pets-cards">

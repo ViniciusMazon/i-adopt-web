@@ -6,7 +6,6 @@ import { faExclamationCircle, faCat, faDog, faMars, faVenus, faRulerVertical, fa
 
 
 import './style.css';
-import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 
 export default function PetsEdit({ match }) {
@@ -86,7 +85,6 @@ export default function PetsEdit({ match }) {
         )
       }
 
-      <Header />
       <div className="petsEdit-container">
 
         <form onSubmit={handleSubmit} className={"petsEdit-content"}>

@@ -6,7 +6,6 @@ import { faCat, faDog, faMars, faVenus, faRulerVertical, faFileUpload } from '@f
 
 
 import './style.css';
-import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 
 export default function PetsCreate() {
@@ -56,8 +55,6 @@ export default function PetsCreate() {
   }
 
   return (
-    <>
-      <Header />
       <div className="petsCreate-container">
         <form onSubmit={handleSubmit}>
           <Navigation linkPath={'/pets'} />
@@ -121,6 +118,5 @@ export default function PetsCreate() {
 
         </form>
       </div>
-    </>
   );
 }
