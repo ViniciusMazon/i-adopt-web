@@ -9,7 +9,7 @@ export default function NotFound404() {
     <div className="notFound-container">
       <div className="notFound-content">
         <img src={image} alt="" />
-        <Link to="/">Ok</Link>
+        <Link to="/home">Ok</Link>
       </div>
     </div>
   );
