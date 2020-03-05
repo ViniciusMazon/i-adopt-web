@@ -1,0 +1,19 @@
+.notFound-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notFound-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.notFound-content a {
+  font-size: 25px;
+  color: #F67280;
+}

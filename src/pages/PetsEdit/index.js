@@ -20,6 +20,7 @@ export default function PetsEdit({ match }) {
   const [size, setSize] = useState('');
   const [avatar, setAvatar] = useState('');
   const [date, setDate] = useState('');
+  const [organization, setOrganization] = useState('');
   const [modalDelete, setModalDelete] = useState(false);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function PetsEdit({ match }) {
       setGender(data.gender);
       setSize(data.size);
       setAvatar(data.avatar);
+      setOrganization(data.organization);
       setDate(data.date);
     }
 
@@ -50,6 +52,7 @@ export default function PetsEdit({ match }) {
       gender,
       size,
       avatar,
+      organization,
       date,
     }
 

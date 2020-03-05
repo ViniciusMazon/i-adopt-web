@@ -25,7 +25,7 @@ export default function Header() {
           <FontAwesomeIcon icon={faStickyNote} className="header-icon" />
           <p>Applications</p>
         </Link>
-        <Link to="/">
+        <Link to="/account">
           <FontAwesomeIcon icon={faUserAlt} className="header-icon" />
           <p>Account</p>
         </Link>

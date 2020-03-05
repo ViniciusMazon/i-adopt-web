@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCat, faDog, faMars, faVenus, faRulerVertical } from '@fortawesome/free-solid-svg-icons'
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css';
 import iconApplication from '../../assets/icon-application.png';
@@ -26,7 +26,9 @@ export default function Home({ match }) {
       setPets(response.data);
     }
 
-    setUserName(sessionStorage.getItem('IAdopt_userName'))
+    const user = JSON.parse(sessionStorage.getItem('IAdopt_user'));
+    console.log(user)
+    setUserName(user.first_name);
     getPets()
   }, []);
 

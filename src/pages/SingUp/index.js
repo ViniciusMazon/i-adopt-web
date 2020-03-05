@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import './styles.css';
 import Navigation from '../../components/Navigation';
-import ErrorBaloon from '../../components/ErrorBallon';
+import ErrorBalloon from '../../components/ErrorBalloon';
 
 export default function SingUp() {
 
@@ -86,7 +86,7 @@ export default function SingUp() {
         <Navigation linkPath="/" />
 
         {
-          error ? <ErrorBaloon message={errorMessage}/> : null
+          error ? <ErrorBalloon message={errorMessage}/> : null
         }
 
         <input type="text" placeholder="Organization name" value={organization} onChange={e => setOrganization(e.target.value)} required />

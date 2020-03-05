@@ -17,7 +17,8 @@ export default function Pets() {
 
   useEffect(() => {
     async function initPetPage() {
-      const response = await axios.get('http://localhost:4000/pets');
+      const user = JSON.parse(sessionStorage.getItem('IAdopt_user'));
+      const response = await axios.get(`http://localhost:4000/pets?organization=${user.organization}`);
       setPets(response.data);
     }
 
