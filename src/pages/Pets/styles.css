@@ -3,19 +3,20 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: flex-start;
   align-items: center;
-  margin-top: 50px;
+  padding: 5% 0 0 0;
 }
 
 .pets-cards {
-  margin-top: 50px;
+  margin-top: 2%;
   width: 90%;
+  height: 70%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 @media (max-width: 450px) {

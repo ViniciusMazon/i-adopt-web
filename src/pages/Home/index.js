@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,9 +25,11 @@ export default function Home({ match }) {
       setPets(response.data);
     }
 
-    const user = JSON.parse(sessionStorage.getItem('IAdopt_user'));
-    console.log(user)
-    setUserName(user.first_name);
+    const token_bearer = sessionStorage.getItem('IAdopt_session');
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, {complete: true});
+    console.log("token_decoded", decoded.payload);
+    setUserName(decoded.payload.user_name);
     getPets()
   }, []);
 

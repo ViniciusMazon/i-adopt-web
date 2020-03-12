@@ -11,7 +11,7 @@ export default function CardPet({ data }) {
 
   let history = useHistory();
 
-  const { id, name, price, specie, gender, size, avatar, date } = data;
+  const { id, name, price, specie, gender, size, avatar, creation_date } = data;
 
   function handleEdit() {
     history.push(`/pets/${id}`);
@@ -21,7 +21,7 @@ export default function CardPet({ data }) {
     <div className="card-container">
       <div className="card-header">
         <p>{id}</p>
-        <p>{date}</p>
+        <p>{creation_date}</p>
       </div>
 
       <div className="card-body">

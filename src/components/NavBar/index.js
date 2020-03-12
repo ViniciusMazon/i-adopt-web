@@ -19,12 +19,6 @@ export default function NavBar() {
           <Nav.Link href="/home">Home</Nav.Link>
           <Nav.Link href="/pets">Pets</Nav.Link>
           <Nav.Link href="/home">Applications</Nav.Link>
-          <NavDropdown title="Settings" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/account">Account</NavDropdown.Item>
-            <NavDropdown.Item href="/account/password">Change password</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="/">Log out</NavDropdown.Item>
-          </NavDropdown>
           <Nav.Link href="/home">About</Nav.Link>
         </Nav>
       </Navbar.Collapse>

@@ -1,5 +1,6 @@
 .menuBar-container {
   width: 100%;
+  /* position: fixed; */
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
 import './styles.css';
-import Navigation from '../../components/Navigation';
 import MenuBar from '../../components/MenuBar';
 import CardCreatePet from '../../components/CardCreatePet';
 import CardPet from '../../components/CardPet';
@@ -15,8 +15,10 @@ export default function Pets() {
 
   useEffect(() => {
     async function initPetPage() {
-      const user = JSON.parse(sessionStorage.getItem('IAdopt_user'));
-      const response = await axios.get(`http://localhost:4000/pets?organization=${user.organization}`);
+      const token_bearer = sessionStorage.getItem('IAdopt_session');
+      const [, token] = token_bearer.split(' ');
+      var decoded = jwt.decode(token, {complete: true});
+      const response = await axios.get(`http://localhost:4000/pets?organization=${decoded.payload.org_id}`);
       setPets(response.data);
     }
 
@@ -25,7 +27,7 @@ export default function Pets() {
 
   function search(searchName) {
     if (searchName) {
-      const searchResult = pets.filter(pet => pet.name === searchName);
+      const searchResult = pets.filter(pet => pet.name.toLowerCase() === searchName.toLowerCase());
       if (searchResult.length >= 1) {
         setSearchAndFilter(searchResult);
       }
@@ -59,7 +61,6 @@ export default function Pets() {
 
   return (
     <div className="pets-container">
-      <Navigation linkPath={'/home'} />
       <MenuBar search={search} filter={filter} closeFilterAndSearch={closeFilterAndSearch} />
       <div className="pets-cards">
 

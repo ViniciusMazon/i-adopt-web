@@ -15,17 +15,17 @@ export default function CardCreatePet({ data, avatarTemp }) {
   }
 
   return (
-    <div className="CardCreatePet-container">
+    <div className="CardCreatePet-container" onClick={handleCreateNewCard}>
       <div className="CardCreatePet-header"></div>
 
-      <button className="CardCreatePet-body" onClick={handleCreateNewCard}>
-        <span className="CardCreatePet-button">
+      <div className="CardCreatePet-body" >
+        <span className="CardCreatePet-circle">
           <FontAwesomeIcon icon={faPlus} className="CardCreatePet-icon" />
         </span>
 
         Create new pet
 
-      </button>
+      </div>
 
       <div className="CardCreatePet-footer"></div>
     </div >

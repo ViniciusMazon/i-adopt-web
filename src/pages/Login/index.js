@@ -10,20 +10,21 @@ import ErrorBalloon from '../../components/ErrorBalloon';
 export default function Login() {
 
   let history = useHistory();
-  const [emailVerification, setEmailVerification] = useState('');
-  const [passwordVerification, setPasswordVerification] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   async function auth(e) {
     e.preventDefault();
-    const response = await axios.get(`http://localhost:4000/users?email=${emailVerification}`);
 
-    if (response.data[0].password === passwordVerification) {
-      const userData = JSON.stringify(response.data[0]);
-      sessionStorage.setItem('IAdopt_user', userData);
+    try {
+      const response = await axios.post('http://localhost:4000/login', { email, password });
+      sessionStorage.setItem('IAdopt_session', response.data.authorization);
+      sessionStorage.setItem('IAdopt_user_email', email);
       history.push('/home');
-    } else {
+    } catch (error) {
+      console.log(error);
       setError(true);
       setErrorMessage('Username or password is invalid');
     }
@@ -39,8 +40,8 @@ export default function Login() {
         {
           error ? <ErrorBalloon message={errorMessage} /> : null
         }
-        <input type="email" placeholder="Email" value={emailVerification} onChange={e => setEmailVerification(e.target.value)} />
-        <input type="password" placeholder="Password" value={passwordVerification} onChange={e => setPasswordVerification(e.target.value)} />
+        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
         <button type="button" onClick={auth}>Ok</button>
         <Link to="/singup">Don't have an account?</Link>
       </div>

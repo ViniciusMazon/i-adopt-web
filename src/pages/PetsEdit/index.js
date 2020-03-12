@@ -4,27 +4,25 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamationCircle, faCat, faDog, faMars, faVenus, faRulerVertical, faEraser } from '@fortawesome/free-solid-svg-icons'
 
-
 import './style.css';
 import Navigation from '../../components/Navigation';
 
 export default function PetsEdit({ match }) {
 
   let history = useHistory();
+
   const [id, setId] = useState(0);
   const [name, setName] = useState('');
-  const [price, setPrice] = useState('')
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
-  const [avatar, setAvatar] = useState('');
-  const [date, setDate] = useState('');
-  const [organization, setOrganization] = useState('');
+  const [price, setPrice] = useState('')
+  const [image, setImage] = useState('');
   const [modalDelete, setModalDelete] = useState(false);
 
   useEffect(() => {
     async function petEditInit() {
-      const response = await axios.get(`http://localhost:4000/pets/${match.params.id}`)
+      const response = await axios.get(`http://localhost:4000/pets/details?id=${match.params.id}`)
       const data = response.data;
       setId(data.id);
       setName(data.name);
@@ -32,13 +30,10 @@ export default function PetsEdit({ match }) {
       setSpecie(data.specie);
       setGender(data.gender);
       setSize(data.size);
-      setAvatar(data.avatar);
-      setOrganization(data.organization);
-      setDate(data.date);
+      setImage(data.image);
     }
 
     petEditInit();
-
   }, []);
 
   async function handleSubmit(e) {
@@ -46,16 +41,14 @@ export default function PetsEdit({ match }) {
     const changes = {
       id,
       name,
-      price,
       specie,
       gender,
       size,
-      avatar,
-      organization,
-      date,
+      price: price || 0,
+      image
     }
 
-    await axios.put(`http://localhost:4000/pets/${id}`, changes);
+    await axios.put(`http://localhost:4000/pets`, changes);
     history.push('/pets');
   }
 
@@ -65,7 +58,7 @@ export default function PetsEdit({ match }) {
 
   async function handleDelete(e) {
     e.preventDefault();
-    await axios.delete(`http://localhost:4000/pets/${id}`);
+    await axios.delete(`http://localhost:4000/pets?id=${id}`);
     history.push('/pets');
   }
 

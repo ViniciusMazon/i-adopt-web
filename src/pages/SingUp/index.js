@@ -11,7 +11,6 @@ export default function SingUp() {
 
 
   let history = useHistory();
-  const [id, setId] = useState(parseInt(Date.now()));
   const [organization, setOrganization] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -62,10 +61,9 @@ export default function SingUp() {
     e.preventDefault();
 
     const data = {
-      id,
-      organization,
       first_name: firstName,
       last_name: lastName,
+      organization,
       email,
       password,
     }
