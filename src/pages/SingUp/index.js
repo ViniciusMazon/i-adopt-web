@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import passwordValidator from 'password-validator';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +11,7 @@ export default function SingUp() {
 
 
   let history = useHistory();
+  const [organizationList, setOrganizationList] = useState([]);
   const [organization, setOrganization] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -22,6 +23,13 @@ export default function SingUp() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    async function loadOrganizationList() {
+      const response = await axios.get('http://localhost:4000/organization');
+      setOrganizationList(response.data);
+    }
+    loadOrganizationList();
+  }, []);
 
   async function validator(data) {
     const { } = data;
@@ -84,10 +92,18 @@ export default function SingUp() {
         <Navigation linkPath="/" />
 
         {
-          error ? <ErrorBalloon message={errorMessage}/> : null
+          error ? <ErrorBalloon message={errorMessage} /> : null
         }
 
-        <input type="text" placeholder="Organization name" value={organization} onChange={e => setOrganization(e.target.value)} required />
+        <select onChange={e => setOrganization(e.target.value)}>
+          <option value="">Organization</option>
+          {
+            organizationList.map( org => (
+              <option key={org.id} value={org.id}>{org.name}</option>
+            ))
+          }
+        </select>
+
         <input type="text" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
         <input type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} required />
         <input type="email" placeholder="Your best email" value={email} onChange={e => setEmail(e.target.value)} required />
