@@ -7,6 +7,11 @@ import { faHome, faDog, faStickyNote, faCog, faKey, faUserAlt, faSignInAlt } fro
 import './styles.css';
 import logo from '../../assets/logo.png';
 
+function handlerLogout() {
+  sessionStorage.removeItem('IAdopt_user_email');
+  sessionStorage.removeItem('IAdopt_session');
+}
+
 export default function NavBar() {
   return (
     <Navbar expand="lg" fixed="top" className="navBar-container">
@@ -20,6 +25,7 @@ export default function NavBar() {
           <Nav.Link href="/pets">Pets</Nav.Link>
           <Nav.Link href="/home">Applications</Nav.Link>
           <Nav.Link href="/home">About</Nav.Link>
+          <Nav.Link href="/" onClick={handlerLogout}>Log out</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

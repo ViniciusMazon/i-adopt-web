@@ -23,7 +23,7 @@ export default function SingUp() {
   const [errorMessage, setErrorMessage] = useState('');
 
 
-  function validator(data) {
+  async function validator(data) {
     const { } = data;
     var schema = new passwordValidator();
     schema
