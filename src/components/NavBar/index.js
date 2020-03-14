@@ -23,7 +23,7 @@ export default function NavBar() {
         <Nav className="ml-auto">
           <Nav.Link href="/home">Home</Nav.Link>
           <Nav.Link href="/pets">Pets</Nav.Link>
-          <Nav.Link href="/home">Applications</Nav.Link>
+          <Nav.Link href="/applications">Applications</Nav.Link>
           <Nav.Link href="/home">About</Nav.Link>
           <Nav.Link href="/" onClick={handlerLogout}>Log out</Nav.Link>
         </Nav>
