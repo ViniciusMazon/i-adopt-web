@@ -10,6 +10,7 @@ import Pets from '../src/pages/Pets';
 import PetsCreate from '../src/pages/PetsCreate';
 import PetsEdit from '../src/pages/PetsEdit';
 import Application from '../src/pages/Application';
+import ApplicationReview from '../src/pages/ApplicationReview';
 import NotFound404 from '../src/pages/NotFound404';
 
 
@@ -26,7 +27,8 @@ export default function Routes() {
             <Route exact path="/pets" component={Pets} />
             <Route path="/pets/new" component={PetsCreate} />
             <Route path="/pets/:id" component={PetsEdit} />
-            <Route path="/applications" component={Application} />
+            <Route exact path="/applications" component={Application} />
+            <Route path="/applications/review" component={ApplicationReview} />
             <Route path='*' component={NotFound404} />
           </Switch>
         </Router>
