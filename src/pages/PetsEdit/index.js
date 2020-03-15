@@ -8,7 +8,7 @@ import './style.css';
 import Navigation from '../../components/Navigation';
 
 export default function PetsEdit({ match }) {
-
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
   let history = useHistory();
 
   const [id, setId] = useState(0);
@@ -22,7 +22,9 @@ export default function PetsEdit({ match }) {
 
   useEffect(() => {
     async function petEditInit() {
-      const response = await axios.get(`http://localhost:4000/pets/details?id=${match.params.id}`)
+      const response = await axios.get(`http://localhost:4000/pets/details?id=${match.params.id}`, {
+        headers: { Authorization: token_bearer }
+      })
       const data = response.data;
       setId(data.id);
       setName(data.name);
@@ -48,7 +50,9 @@ export default function PetsEdit({ match }) {
       image
     }
 
-    await axios.put(`http://localhost:4000/pets`, changes);
+    await axios.put(`http://localhost:4000/pets`, changes, {
+      headers: { Authorization: token_bearer }
+    });
     history.push('/pets');
   }
 
@@ -58,7 +62,9 @@ export default function PetsEdit({ match }) {
 
   async function handleDelete(e) {
     e.preventDefault();
-    await axios.delete(`http://localhost:4000/pets?id=${id}`);
+    await axios.delete(`http://localhost:4000/pets?id=${id}`, {
+      headers: { Authorization: token_bearer }
+    });
     history.push('/pets');
   }
 

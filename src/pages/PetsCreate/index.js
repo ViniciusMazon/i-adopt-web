@@ -12,6 +12,7 @@ import Navigation from '../../components/Navigation';
 export default function PetsCreate() {
 
   let history = useHistory();
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState()
@@ -22,7 +23,6 @@ export default function PetsCreate() {
   const [organization_id, setOrganization_id] = useState();
 
   useEffect(() => {
-    const token_bearer = sessionStorage.getItem('IAdopt_session');
     const [, token] = token_bearer.split(' ');
     var decoded = jwt.decode(token, { complete: true });
     setOrganization_id(decoded.payload.org_id);
@@ -40,12 +40,14 @@ export default function PetsCreate() {
       specie,
       gender,
       size,
-      price : price || 0,
+      price: price || 0,
       image,
       organization_id,
     }
 
-    await axios.post('http://localhost:4000/pets', data);
+    await axios.post('http://localhost:4000/pets', data, {
+      headers: { Authorization: token_bearer }
+    });
     history.push('/pets');
   }
 

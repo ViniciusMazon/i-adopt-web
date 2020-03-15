@@ -25,9 +25,13 @@ export default function Application() {
 
   const [applicationsList, setApplicationsList] = useState([]);
 
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
+
   useEffect(() => {
     async function applicationListLoad() {
-      const response = await axios.get('http://localhost:4000/applications');
+      const response = await axios.get('http://localhost:4000/applications', {
+        headers: { Authorization: token_bearer }
+      });
       setApplicationsList(response.data);
     }
 
@@ -98,7 +102,7 @@ export default function Application() {
               </TableRow>
               <TableRowButton>
                 <Link to={`/applications/review/${application.application_id}`}>
-                  <FontAwesomeIcon icon={faAngleRight} color={'#F67280'}/>
+                  <FontAwesomeIcon icon={faAngleRight} color={'#F67280'} />
                 </Link>
               </TableRowButton>
             </TableColum>

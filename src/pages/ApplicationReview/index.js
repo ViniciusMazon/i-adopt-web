@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCat, faMars, faVenus, faRulerVertical, faCalendar } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,11 +25,16 @@ import {
 
 export default function ApplicationReview({ match }) {
 
+  let history = useHistory();
   const [applicationData, setApplicationData] = useState({});
+
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
 
   useEffect(() => {
     async function applicationDataLoad(id) {
-      const response = await axios.get(`http://localhost:4000/applications/review?id=${id}`);
+      const response = await axios.get(`http://localhost:4000/applications/review?id=${id}`, {
+        headers: { Authorization: token_bearer }
+      });
       setApplicationData(response.data);
     }
     const id = match.params.id;
@@ -58,6 +64,18 @@ export default function ApplicationReview({ match }) {
         break;
     }
     return color;
+  }
+
+  async function handlerStatus(status) {
+    const data = {
+      status: status
+    }
+
+    await axios.put(`http://localhost:4000/applications/status?id=${applicationData.id_application}`, data, {
+      headers: { Authorization: token_bearer }
+    });
+
+    history.push('/applications');
   }
 
   return (
@@ -116,7 +134,7 @@ export default function ApplicationReview({ match }) {
           </Section>
           <Section>
             <Title>Historic</Title>
-          <Line>Have you adopted an animal before? {applicationData.already_adopted}</Line>
+            <Line>Have you adopted an animal before? {applicationData.already_adopted}</Line>
             <Line>Are there other animals at home? {applicationData.animals_home}</Line>
             <Line>Have any dogs or cats in the house been ill in the past few months? {applicationData.sick_animals_home}</Line>
             <Line>Are you aware that you will have to add food, vaccines and veterinary care to your budget? {applicationData.add_budget_spend}</Line>
@@ -128,11 +146,11 @@ export default function ApplicationReview({ match }) {
           <Section>
             <Title>Contact</Title>
             <Line>Email: {applicationData.email}</Line>
-            <Line>Phone: {applicationData.area_code +' '+ applicationData.phone}</Line>
+            <Line>Phone: {applicationData.area_code + ' ' + applicationData.phone}</Line>
           </Section>
         </PetData>
-        <Button backColor={'#FF9999'} backColorHover={'#CF7878'}>Reject</Button>
-        <Button backColor={'#118696'} backColorHover={'#0C636F'}>Aprove</Button>
+        <Button backColor={'#FF9999'} backColorHover={'#CF7878'} onClick={() => handlerStatus('rejected')}>Reject</Button>
+        <Button backColor={'#118696'} backColorHover={'#0C636F'} onClick={() => handlerStatus('accept')}>Accept</Button>
       </Content>
     </Container>
   );
