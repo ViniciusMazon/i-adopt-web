@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
+import NavBar from '../../components/NavBar';
 import MenuBar from '../../components/MenuBar';
 import {
   Container,
@@ -69,6 +70,7 @@ export default function Application() {
 
   return (
     <Container>
+      <NavBar />
       <MenuBar search={() => { }} filter={() => { }} closeFilterAndSearch={() => { }} />
 
       <Table>

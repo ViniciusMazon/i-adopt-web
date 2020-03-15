@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
+import NavBar from '../../components/NavBar';
 import './styles.css';
 import MenuBar from '../../components/MenuBar';
 import CardCreatePet from '../../components/CardCreatePet';
@@ -64,13 +65,12 @@ export default function Pets() {
 
   return (
     <div className="pets-container">
+      <NavBar />
       <MenuBar search={search} filter={filter} closeFilterAndSearch={closeFilterAndSearch} />
       <div className="pets-cards">
-
         {
           searchAndFilter.length === 0 ? <CardCreatePet /> : null
         }
-
         {
           searchAndFilter.length > 0 ? (
             searchAndFilter.map(pet => (

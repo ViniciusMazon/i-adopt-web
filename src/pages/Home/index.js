@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
+import NavBar from '../../components/NavBar';
 import './styles.css';
 import iconApplication from '../../assets/icon-application.png';
 import iconHouse from '../../assets/icon-house.png';
@@ -29,7 +30,7 @@ export default function Home({ match }) {
 
     const token_bearer = sessionStorage.getItem('IAdopt_session');
     const [, token] = token_bearer.split(' ');
-    var decoded = jwt.decode(token, {complete: true});
+    var decoded = jwt.decode(token, { complete: true });
     console.log("token_decoded", decoded.payload);
     setUserName(decoded.payload.user_name);
     getPets()
@@ -113,88 +114,91 @@ export default function Home({ match }) {
   }, [pets]);
 
   return (
-    <div className="home-container">
-      <div className="home-content">
-        <div className="board-container">
+    <>
+      <div className="home-container">
+        <NavBar />
+        <div className="home-content">
+          <div className="board-container">
 
-          <h1>Hey {userName}, look at this!</h1>
+            <h1>Hey {userName}, look at this!</h1>
 
-          <span>
-            <h2>Your applications</h2>
-            <div className="board-content">
+            <span>
+              <h2>Your applications</h2>
+              <div className="board-content">
 
-              <div className="board">
-                <img src={iconHouse} className="board-icon" />
-                <strong className="board-numbers">INOP</strong>
-                <p>Pets adopted</p>
-              </div>
-
-              <div className="board">
-                <img src={iconApplication} className="board-icon" />
-                <strong className="board-numbers">INOP</strong>
-                <p>Pending applications</p>
-              </div>
-            </div>
-          </span>
-
-          <span>
-            <h2>Your pets</h2>
-            <div className="board-content">
-
-              <div className="board">
-                <div>
-                  <img src={iconDog} className="board-icon" />
+                <div className="board">
+                  <img src={iconHouse} className="board-icon" />
+                  <strong className="board-numbers">INOP</strong>
+                  <p>Pets adopted</p>
                 </div>
-                <div>
-                  <span>
-                    <strong className="board-numbers">{dogsInfo.total}</strong>
-                    <p>Dogs</p>
-                  </span>
-                  <span className="board-gender">
-                    <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
-                    <p>{dogsInfo.female}</p>
-                    <FontAwesomeIcon icon={faMars} className="board-info-icon" />
-                    <p>{dogsInfo.male}</p>
-                  </span>
-                  <span className="board-size">
-                    <strong className="board-size-emphasis">S</strong>
-                    <p>{dogsInfo.small}</p>
-                    <strong className="board-size-emphasis">M</strong>
-                    <p>{dogsInfo.medium}</p>
-                    <strong className="board-size-emphasis">B</strong>
-                    <p>{dogsInfo.big}</p>
-                  </span>
+
+                <div className="board">
+                  <img src={iconApplication} className="board-icon" />
+                  <strong className="board-numbers">INOP</strong>
+                  <p>Pending applications</p>
                 </div>
               </div>
-              <div className="board">
-                <div>
-                  <img src={iconCat} className="board-icon" />
+            </span>
+
+            <span>
+              <h2>Your pets</h2>
+              <div className="board-content">
+
+                <div className="board">
+                  <div>
+                    <img src={iconDog} className="board-icon" />
+                  </div>
+                  <div>
+                    <span>
+                      <strong className="board-numbers">{dogsInfo.total}</strong>
+                      <p>Dogs</p>
+                    </span>
+                    <span className="board-gender">
+                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
+                      <p>{dogsInfo.female}</p>
+                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
+                      <p>{dogsInfo.male}</p>
+                    </span>
+                    <span className="board-size">
+                      <strong className="board-size-emphasis">S</strong>
+                      <p>{dogsInfo.small}</p>
+                      <strong className="board-size-emphasis">M</strong>
+                      <p>{dogsInfo.medium}</p>
+                      <strong className="board-size-emphasis">B</strong>
+                      <p>{dogsInfo.big}</p>
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span>
-                    <strong className="board-numbers">{catsInfo.total}</strong>
-                    <p>Cats</p>
-                  </span>
-                  <span className="board-gender">
-                    <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
-                    <p>{catsInfo.female}</p>
-                    <FontAwesomeIcon icon={faMars} className="board-info-icon" />
-                    <p>{catsInfo.male}</p>
-                  </span>
-                  <span className="board-size">
-                    <strong className="board-size-emphasis">S</strong>
-                    <p>{catsInfo.small}</p>
-                    <strong className="board-size-emphasis">M</strong>
-                    <p>{catsInfo.medium}</p>
-                    <strong className="board-size-emphasis">B</strong>
-                    <p>{catsInfo.big}</p>
-                  </span>
+                <div className="board">
+                  <div>
+                    <img src={iconCat} className="board-icon" />
+                  </div>
+                  <div>
+                    <span>
+                      <strong className="board-numbers">{catsInfo.total}</strong>
+                      <p>Cats</p>
+                    </span>
+                    <span className="board-gender">
+                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
+                      <p>{catsInfo.female}</p>
+                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
+                      <p>{catsInfo.male}</p>
+                    </span>
+                    <span className="board-size">
+                      <strong className="board-size-emphasis">S</strong>
+                      <p>{catsInfo.small}</p>
+                      <strong className="board-size-emphasis">M</strong>
+                      <p>{catsInfo.medium}</p>
+                      <strong className="board-size-emphasis">B</strong>
+                      <p>{catsInfo.big}</p>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </span>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
