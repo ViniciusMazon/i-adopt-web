@@ -12,15 +12,16 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 33%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  background: '#FBFAF9';
 `;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 2%;
-  /* background: '#FBFAF9'; */
 `;
 
 export const Status = styled.div`
@@ -57,7 +58,7 @@ export const PetInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #DDDDDD;
+  margin-bottom: 3%;
 
   h1 {
     font-size: 25px;
@@ -85,6 +86,37 @@ export const PetInfo = styled.div`
   }
 `;
 
+export const PetData = styled.div`
+
+`;
+
+export const Section = styled.div`
+  width: 100%;
+  border-top: 1px solid #DDDDDD;
+  margin-top: 3%;
+`;
+
+export const Title = styled.p`
+  font-size: 18px;
+  font-weight: 800;
+  color: #333;
+  margin: 1.5% 0 1.5% 0;
+`;
+
+export const Line = styled.p`
+font-size: 16px;
+color: #666;
+margin-bottom: 1%;
+`;
+
+export const TextArea = styled.p`
+font-size: 16px;
+color: #666;
+background: #DDD;
+padding: 1%;
+margin-bottom: 1%;
+`;
+
 export const Button = styled.button`
   width: 100%;
   height: 50px;
@@ -93,7 +125,7 @@ export const Button = styled.button`
   background: ${props => props.backColor};
   border-style: none;
   border-radius: 6px;
-  margin-bottom: 4%;
+  margin-top: 4%;
 
   :hover {
     background: ${props => props.backColorHover};
