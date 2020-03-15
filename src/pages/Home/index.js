@@ -21,7 +21,9 @@ export default function Home({ match }) {
 
   useEffect(() => {
     async function getPets() {
-      const response = await axios.get("http://localhost:4000/pets");
+      const response = await axios.get("http://localhost:4000/pets", {
+        headers: { Authorization: token_bearer }
+      });
       setPets(response.data);
     }
 

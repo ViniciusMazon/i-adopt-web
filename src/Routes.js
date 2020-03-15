@@ -28,7 +28,7 @@ export default function Routes() {
             <Route path="/pets/new" component={PetsCreate} />
             <Route path="/pets/:id" component={PetsEdit} />
             <Route exact path="/applications" component={Application} />
-            <Route path="/applications/review" component={ApplicationReview} />
+            <Route path="/applications/review/:id" component={ApplicationReview} />
             <Route path='*' component={NotFound404} />
           </Switch>
         </Router>

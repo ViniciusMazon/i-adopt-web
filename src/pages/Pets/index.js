@@ -17,8 +17,10 @@ export default function Pets() {
     async function initPetPage() {
       const token_bearer = sessionStorage.getItem('IAdopt_session');
       const [, token] = token_bearer.split(' ');
-      var decoded = jwt.decode(token, {complete: true});
-      const response = await axios.get(`http://localhost:4000/pets?organization=${decoded.payload.org_id}`);
+      var decoded = jwt.decode(token, { complete: true });
+      const response = await axios.get(`http://localhost:4000/pets?organization=${decoded.payload.org_id}`, {
+        headers: { Authorization: token_bearer }
+      })
       setPets(response.data);
     }
 

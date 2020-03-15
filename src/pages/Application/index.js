@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
@@ -58,12 +59,9 @@ export default function Application() {
     return color;
   }
 
-  function search() {}
-  function filter() {}
-  function closeFilterAndSearch(){}
-  function goToApplicationReview(){
-    console.log('Application review')
-  }
+  function search() { }
+  function filter() { }
+  function closeFilterAndSearch() { }
 
   return (
     <Container>
@@ -98,8 +96,10 @@ export default function Application() {
                   <StatusText color={statusColor(application.status)}>{application.status}</StatusText>
                 </Status>
               </TableRow>
-              <TableRowButton onClick={goToApplicationReview}>
-                <FontAwesomeIcon icon={faAngleRight} color={'#F67280'}/>
+              <TableRowButton>
+                <Link to={`/applications/review/${application.application_id}`}>
+                  <FontAwesomeIcon icon={faAngleRight} color={'#F67280'}/>
+                </Link>
               </TableRowButton>
             </TableColum>
           ))

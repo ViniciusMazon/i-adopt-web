@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCat, faMars, faVenus, faRulerVertical, faCalendar } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,70 +22,113 @@ import {
   Button
 } from './styles';
 
-export default function ApplicationReview() {
+export default function ApplicationReview({ match }) {
+
+  const [applicationData, setApplicationData] = useState({});
+
+  useEffect(() => {
+    async function applicationDataLoad(id) {
+      const response = await axios.get(`http://localhost:4000/applications/review?id=${id}`);
+      setApplicationData(response.data);
+    }
+    const id = match.params.id;
+    applicationDataLoad(id);
+  }, []);
+
+  function statusColor(status) {
+    var color = '';
+    switch (status) {
+      case 'new':
+        color = '#8C97F9';
+        break;
+      case 'accept':
+        color = '#4AFF1D';
+        break;
+      case 'adopted':
+        color = '#FF9999';
+        break;
+      case 'canceled':
+        color = '#666666';
+        break;
+      case 'rejected':
+        color = '#D32A34';
+        break;
+      default:
+        color = '#DDD';
+        break;
+    }
+    return color;
+  }
+
   return (
     <Container>
       <Content>
         <Header>
           <Navigation linkPath={'/applications'} />
           <Status>
-            <IconStatus color={'#8C97F9'} />
-            <StatusText color={'#8C97F9'}>new</StatusText>
+            <IconStatus color={statusColor(applicationData.status)} />
+            <StatusText color={statusColor(applicationData.status)}>{applicationData.status}</StatusText>
           </Status>
         </Header>
         <PetInfo>
           <Avatar src={image} />
-          <h1>Vanilla</h1>
+          <h1>{applicationData.name}</h1>
           <div>
             <span>
               <FontAwesomeIcon icon={faCat} color={'#666'} />
-              <p>Cat</p>
+              <p>{applicationData.specie}</p>
             </span>
             <span>
               <FontAwesomeIcon icon={faMars} color={'#666'} />
-              <p>Male</p>
+              <p>{applicationData.gender}</p>
             </span>
             <span>
               <FontAwesomeIcon icon={faRulerVertical} color={'#666'} />
-              <p>Medium</p>
+              <p>{applicationData.gender}</p>
             </span>
             <span>
               <FontAwesomeIcon icon={faCalendar} color={'#666'} />
-              <p>2020-03-14</p>
+              <p>{applicationData.date_creation}</p>
             </span>
           </div>
         </PetInfo>
         <PetData>
           <Section>
             <Title>About the tutor</Title>
-            <Line>Name: Fulano Beltrano Citrano</Line>
-            <Line>Age: 26</Line>
-            <Line>Marital status: Single</Line>
-            <Line>Profession: Developer</Line>
+            <Line>Name: {applicationData.first_name + ' ' + applicationData.last_name}</Line>
+            <Line>Age: {applicationData.date_of_birth}</Line>
+            <Line>Marital status: {applicationData.marital_status}</Line>
+            <Line>Profession: {applicationData.profession}</Line>
           </Section>
           <Section>
             <Title>About the residence</Title>
-            <Line>Type of residence: House</Line>
-            <Line>Number of adults at home: 2</Line>
-            <Line>Number of children at home: 1</Line>
-            <Line>Has smokers at home: No</Line>
-            <Line>Address: Rua 24 de Outubro, 498, Centro, Barreiras - BA</Line>
+            <Line>Type of residence: {applicationData.type_of_residence}</Line>
+            <Line>Number of adults at home: {applicationData.adult_residents}</Line>
+            <Line>Number of children at home: {applicationData.children_residents}</Line>
+            <Line>Has smokers at home: {applicationData.has_smokers}</Line>
+            <Line>Address: {
+              applicationData.street + ', ' +
+              applicationData.num + ', ' +
+              applicationData.neighborhood + ', ' +
+              applicationData.city + ' - ' +
+              applicationData.region
+            }</Line>
           </Section>
           <Section>
             <Title>Historic</Title>
-            <Line>Have you adopted an animal before? Yes</Line>
-            <Line>Are there other animals at home? No</Line>
-            <Line>Have any dogs or cats in the house been ill in the past few months? No</Line>
-            <Line>Are you aware that you will have to add food, vaccines and veterinary care to your budget? Yes</Line>
-            <Line>Why do you want to adopt the  PET NAME?</Line>
-            <TextArea>Bla bla bla</TextArea>
-            <Line>Do you have any questions about the adoption process or the  PET NAME ?</Line>
-            <TextArea>Bla bla bla</TextArea>
+          <Line>Have you adopted an animal before? {applicationData.already_adopted}</Line>
+            <Line>Are there other animals at home? {applicationData.animals_home}</Line>
+            <Line>Have any dogs or cats in the house been ill in the past few months? {applicationData.sick_animals_home}</Line>
+            <Line>Are you aware that you will have to add food, vaccines and veterinary care to your budget? {applicationData.add_budget_spend}</Line>
+            <Line>Why do you want to adopt the  {applicationData.name}</Line>
+            <TextArea>{applicationData.why_want_adopt}</TextArea>
+            <Line>Do you have any questions about the adoption process or the  {applicationData.name} ?</Line>
+            <TextArea>{applicationData.have_questions}</TextArea>
           </Section>
           <Section>
             <Title>Contact</Title>
-            <Line>Email: vnpmazon@gmail.com</Line>
-            <Line>Phone: 77 99106-2220</Line>
+            <Line>Email: {applicationData.email}</Line>
+            <Line>Phone: {applicationData.area_code +' '+ applicationData.phone}</Line>
           </Section>
         </PetData>
         <Button backColor={'#FF9999'} backColorHover={'#CF7878'}>Reject</Button>
