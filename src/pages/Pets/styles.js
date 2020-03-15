@@ -65,24 +65,3 @@ export const Avatar = styled.img`
   border-radius: 100%;
   margin-right: 10px;
 `;
-
-export const Status = styled.div`
-  width: 90px;
-  height: 16px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-export const IconStatus = styled.div`
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  background: ${props => props.color};
-  margin-right: 6px;
-`;
-
-export const StatusText = styled.p`
-  color: ${props => props.color};
-  margin: 5px;
-`;

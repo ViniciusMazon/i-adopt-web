@@ -75,36 +75,36 @@ export default function Application() {
 
       <Table>
         <TableHeaderColumn>
-          <TableHeaderRow>ID</TableHeaderRow>
-          <TableHeaderRow>Pet</TableHeaderRow>
-          <TableHeaderRow>Pet id</TableHeaderRow>
-          <TableHeaderRow>Tutor</TableHeaderRow>
-          <TableHeaderRow>Tutor id</TableHeaderRow>
-          <TableHeaderRow>Date</TableHeaderRow>
-          <TableHeaderRow>Status</TableHeaderRow>
-          <TableHeaderRow>Action</TableHeaderRow>
+          <TableHeaderRow width={'8%'}>ID</TableHeaderRow>
+          <TableHeaderRow width={'20%'}>Pet</TableHeaderRow>
+          <TableHeaderRow width={'8%'}>Pet id</TableHeaderRow>
+          <TableHeaderRow width={'15%'}>Tutor</TableHeaderRow>
+          <TableHeaderRow width={'8%'}>Tutor id</TableHeaderRow>
+          <TableHeaderRow width={'12%'}>Date</TableHeaderRow>
+          <TableHeaderRow width={'13%'}>Status</TableHeaderRow>
+          <TableHeaderRow width={'16%'}>Action</TableHeaderRow>
         </TableHeaderColumn>
         {
           applicationsList.map(application => (
             <TableColum>
-              <TableRow>{application.application_id}</TableRow>
-              <TableRow>
+              <TableRow width={'8%'}>{application.application_id}</TableRow>
+              <TableRow width={'20%'}>
                 <Avatar src={imageTemp} />
                 {application.pet_name}
               </TableRow>
-              <TableRow>{application.pet_id}</TableRow>
-              <TableRow>{application.tutor_name}</TableRow>
-              <TableRow>{application.tutor_id}</TableRow>
-              <TableRow>{application.date_creation.split('T')[0]}</TableRow>
-              <TableRow>
+              <TableRow width={'8%'}>{application.pet_id}</TableRow>
+              <TableRow width={'15%'}>{application.tutor_name}</TableRow>
+              <TableRow width={'8%'}>{application.tutor_id}</TableRow>
+              <TableRow width={'12%'}>{application.date_creation.split('T')[0]}</TableRow>
+              <TableRow width={'13%'}>
                 <Status>
                   <IconStatus color={statusColor(application.status)} />
                   <StatusText color={statusColor(application.status)}>{application.status}</StatusText>
                 </Status>
-              </TableRow>
-              <TableRowButton>
+              </TableRow >
+              <TableRowButton width={'16%'}>
                 <Link to={`/applications/review/${application.application_id}`}>
-                  <FontAwesomeIcon icon={faAngleRight} color={'#F67280'} />
+                  Review <FontAwesomeIcon icon={faAngleRight} color={'#F67280'} />
                 </Link>
               </TableRowButton>
             </TableColum>
