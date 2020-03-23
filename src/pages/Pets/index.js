@@ -7,6 +7,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
 import {
   Container,
+  ButtonNewPet,
   Table,
   TableHeaderColumn,
   TableHeaderRow,
@@ -19,14 +20,14 @@ import {
 import imageTemp from '../../assets/temp-avatar-dog.jpg';
 
 import NavBar from '../../components/NavBar';
-import MenuBar from '../../components/MenuBar';
+import SearchAndFilter from '../../components/SearchAndFilter';
 
 
 
 export default function Pets() {
 
   const [pets, setPets] = useState([]);
-  const [searchAndFilter, setSearchAndFilter] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
 
   const token_bearer = sessionStorage.getItem('IAdopt_session');
 
@@ -43,19 +44,18 @@ export default function Pets() {
     initPetPage();
   }, []);
 
-  function search(searchName) {
-    if (searchName) {
-      const searchResult = pets.filter(pet => pet.name.toLowerCase() === searchName.toLowerCase());
-      if (searchResult.length >= 1) {
-        setSearchAndFilter(searchResult);
-      }
+
+  function search(searchValue) {
+    if (searchValue) {
+      var searchResult = pets.filter(pet => pet.name.toLowerCase() === searchValue.toLowerCase());
+      setFilteredResults(searchResult);
     } else {
-      setSearchAndFilter([])
+      setFilteredResults([]);
     }
   }
 
   function filter(filters) {
-    setSearchAndFilter([]);
+    console.log(filters)
     var result = [];
 
     if (filters.specie) {
@@ -70,19 +70,17 @@ export default function Pets() {
       result.length !== 0 ? result = result.filter(pet => pet.size === filters.size) : result = pets.filter(pet => pet.size === filters.size);
     }
 
-    setSearchAndFilter(result);
-  }
-
-  function closeFilterAndSearch() {
-    setSearchAndFilter([]);
+    setFilteredResults(result);
   }
 
   return (
     <Container>
       <NavBar />
-      <MenuBar search={search} filter={filter} closeFilterAndSearch={closeFilterAndSearch} />
-      <Link to='/pets/new' style={{color: '#F67280'}}>Create new</Link>
+      <SearchAndFilter searchFunction={search} filterFunction={filter} />
       <Table>
+        <ButtonNewPet>
+          <Link to='/pets/new'>Create new</Link>
+        </ButtonNewPet>
         <TableHeaderColumn>
           <TableHeaderRow width={'8%'}>ID</TableHeaderRow>
           <TableHeaderRow width={'20%'}>Pet</TableHeaderRow>
@@ -94,7 +92,7 @@ export default function Pets() {
           <TableHeaderRow width={'16%'}>Action</TableHeaderRow>
         </TableHeaderColumn>
         {
-          pets.map(pet => (
+          (filteredResults.length > 0 ? filteredResults : pets).map(pet => (
             <TableColum>
               <TableRow width={'8%'}>{pet.id}</TableRow>
               <TableRow width={'20%'}>

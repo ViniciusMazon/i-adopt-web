@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../../components/NavBar';
-import MenuBar from '../../components/MenuBar';
+import SearchAndFilter from '../../components/SearchAndFilter';
+
 import {
   Container,
   Table,
@@ -16,7 +17,6 @@ import {
   TableRowButton,
   Avatar,
   Status,
-  IconStatus,
   StatusText
 } from './styles';
 
@@ -71,8 +71,7 @@ export default function Application() {
   return (
     <Container>
       <NavBar />
-      <MenuBar search={() => { }} filter={() => { }} closeFilterAndSearch={() => { }} />
-
+      <SearchAndFilter />
       <Table>
         <TableHeaderColumn>
           <TableHeaderRow width={'8%'}>ID</TableHeaderRow>
@@ -97,8 +96,7 @@ export default function Application() {
               <TableRow width={'8%'}>{application.tutor_id}</TableRow>
               <TableRow width={'12%'}>{application.date_creation.split('T')[0]}</TableRow>
               <TableRow width={'13%'}>
-                <Status>
-                  <IconStatus color={statusColor(application.status)} />
+                <Status color={statusColor(application.status)}>
                   <StatusText color={statusColor(application.status)}>{application.status}</StatusText>
                 </Status>
               </TableRow >

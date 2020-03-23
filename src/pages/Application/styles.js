@@ -13,14 +13,13 @@ export const Container = styled.div`
 export const Table = styled.table`
   width: 70%;
   padding: 5%;
-  background: #FBFAF9;
 `;
 
 export const TableHeaderColumn = styled.tr`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-bottom: 8px;
+  padding-bottom: 15px;
 `;
 
 export const TableHeaderRow = styled.th`
@@ -29,7 +28,7 @@ export const TableHeaderRow = styled.th`
   justify-content: flex-start;
   align-items: center;
   font-size: 16px;
-  font-weight: normal;
+  font-weight: bold;
   color: #666;
 `;
 
@@ -38,7 +37,8 @@ export const TableColum = styled.tr`
   display: flex;
   color: #666;
   font-size: 14px;
-  padding-bottom: 15px;
+  border-top: solid 0.5px #DDD;
+  padding: 10px 0 10px 0;
 `;
 
 export const TableRow = styled.td`
@@ -70,19 +70,16 @@ export const Status = styled.div`
   width: 90px;
   height: 16px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-`;
-
-export const IconStatus = styled.div`
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  background: ${props => props.color};
-  margin-right: 6px;
+  border: solid 1px ${props => props.color};
+  border-radius: 10px;
 `;
 
 export const StatusText = styled.p`
   color: ${props => props.color};
   margin: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 3px 0 3px 0;
 `;

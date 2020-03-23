@@ -10,10 +10,34 @@ export const Container = styled.div`
   padding-top: 5%;
 `;
 
+export const ButtonNewPet = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  background: #F67280;
+  border-radius: 2px;
+  padding: 3px 0 3px 0;
+  margin-bottom: 15px;
+
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    color: #FFF;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  :hover {
+    background: #F45D73;
+  }
+`;
+
 export const Table = styled.table`
   width: 70%;
   padding: 5%;
-  background: #FBFAF9;
 `;
 
 export const TableHeaderColumn = styled.tr`
@@ -29,7 +53,7 @@ export const TableHeaderRow = styled.th`
   justify-content: flex-start;
   align-items: center;
   font-size: 16px;
-  font-weight: normal;
+  font-weight: bold;
   color: #666;
 `;
 
@@ -38,7 +62,8 @@ export const TableColum = styled.tr`
   display: flex;
   color: #666;
   font-size: 14px;
-  padding-bottom: 15px;
+  border-top: solid 0.5px #DDD;
+  padding: 10px 0 10px 0;
 `;
 
 export const TableRow = styled.td`
