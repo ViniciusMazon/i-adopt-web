@@ -56,12 +56,6 @@ export default function PetsCreate() {
       <form onSubmit={handleSubmit}>
         <Navigation linkPath={'/pets'} />
 
-        <div className="image-upload">
-          <FontAwesomeIcon icon={faFileUpload} id="icon-image-upladod" />
-          <input type="file" accept='image/*' name="upload" webkitdirectory onChange={handleAvatar} />
-          <p>Choose the best photo</p>
-        </div>
-
         <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required />
         <input type="text" placeholder="Price. Leave it blank to indicate it's free" value={price} onChange={e => setPrice(e.target.value)} />
 
