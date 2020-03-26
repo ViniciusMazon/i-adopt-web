@@ -85,6 +85,7 @@ export const Avatar = styled.img`
   margin-right: 10px;
 `;
 
+// new pet
 
 export const Content = styled.div`
   width: 100%;
@@ -142,15 +143,6 @@ export const Input = styled.div`
     border: none;
     border-bottom: solid 1px #DDD;
   }
-
-  input:valid {
-    border-color: green;
-  }
-
-  input:invalid {
-    border-color: tomato;
-  }
-
 `;
 
 export const Select = styled.div`
@@ -161,14 +153,6 @@ export const Select = styled.div`
 
   select {
     border: solid 1px #DDD;
-  }
-
-  select:valid {
-    border-color: green;
-  }
-
-  select:invalid {
-    border-color: tomato;
   }
 
   label {

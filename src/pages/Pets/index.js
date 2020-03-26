@@ -26,6 +26,7 @@ import {
 } from './styles';
 
 import imageTemp from '../../assets/temp-avatar-dog.jpg';
+import Alert from '../../components/Alert';
 import NavBar from '../../components/NavBar';
 import SearchAndFilter from '../../components/SearchAndFilter';
 
@@ -224,6 +225,8 @@ export default function Pets() {
 
   const [pets, setPets] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
+  const [isAlerting, setIsAlerting] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({});
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -241,7 +244,6 @@ export default function Pets() {
 
     initPetPage();
   }, []);
-
 
   function search(searchValue) {
     if (searchValue) {
@@ -277,6 +279,14 @@ export default function Pets() {
     });
 
     setPets([response.data, ...pets]);
+    setAlertInfo({
+      type: 'success',
+      message: 'Pet successfully registered'
+    });
+    setIsAlerting(true);
+    setTimeout(() => {
+      setIsAlerting(false);
+    }, 3000);
   }
 
   function handlerEdit(petData) {
@@ -292,11 +302,22 @@ export default function Pets() {
     const otherPets = pets.filter(pet => pet.id !== petData.id);
 
     setPets([response.data, ...otherPets]);
+    setAlertInfo({
+      type: 'success',
+      message: 'Pet successfully edited'
+    });
+    setIsAlerting(true);
+    setTimeout(() => {
+      setIsAlerting(false);
+    }, 3000);
   }
 
   return (
     <Container>
       <NavBar />
+      {
+        isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
+      }
       {
         isCreating ? <NewPet cancel={() => setIsCreating(false)} save={createPet} /> : null
       }

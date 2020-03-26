@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import './styles.css';
 import logo from '../../assets/logo.png';
-import ErrorBalloon from '../../components/ErrorBalloon';
+import Alert from '../../components/Alert';
 
 
 export default function Login() {
@@ -12,8 +12,8 @@ export default function Login() {
   let history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isAlerting, setIsAlerting] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({});
 
   async function auth(e) {
     e.preventDefault();
@@ -24,9 +24,14 @@ export default function Login() {
       sessionStorage.setItem('IAdopt_user_email', email);
       history.push('/home');
     } catch (error) {
-      console.log(error);
-      setError(true);
-      setErrorMessage('Username or password is invalid');
+      setAlertInfo({
+        type: 'error',
+        message: 'Invalid username or password'
+      });
+      setIsAlerting(true);
+      setTimeout(() => {
+        setIsAlerting(false);
+      }, 3000);
     }
   }
 
@@ -34,12 +39,11 @@ export default function Login() {
 
     <div className="login-container">
       <div className="login-image" />
-
       <div className="login-content">
-        <img id="logo" src={logo} alt="" />
         {
-          error ? <ErrorBalloon message={errorMessage} /> : null
+          isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
         }
+        <img id="logo" src={logo} alt="" />
         <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
         <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
         <button type="button" onClick={auth}>Ok</button>
