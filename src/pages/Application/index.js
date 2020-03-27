@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faCalendar, faRulerVertical, faMars, faCat } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../../components/NavBar';
-import SearchAndFilter from '../../components/SearchAndFilter';
+import imageTemp from '../../assets/temp-avatar-dog.jpg';
 
 import {
   Container,
@@ -32,8 +32,6 @@ import {
   Footer,
   Button
 } from './styles';
-
-import imageTemp from '../../assets/temp-avatar-dog.jpg';
 
 
 function ApplicationReview({ cancel, changeStatus }) {
@@ -198,6 +196,8 @@ export default function Application() {
     applicationListLoad();
   }, []);
 
+
+
   function applicationReview(application_id) {
     setIsReviewing(true);
     sessionStorage.setItem('iAdopt_ApplicationId', application_id);
@@ -240,7 +240,6 @@ export default function Application() {
   return (
     <Container>
       <NavBar />
-      <SearchAndFilter />
       {
         isReviewing ? <ApplicationReview cancel={() => setIsReviewing(false)} changeStatus={applicationChangeStatus} /> : null
       }
