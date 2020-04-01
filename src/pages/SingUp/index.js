@@ -12,7 +12,7 @@ export default function SingUp() {
 
   let history = useHistory();
   const [organizationList, setOrganizationList] = useState([]);
-  const [organization, setOrganization] = useState('');
+  const [organization_id, setOrganization_id] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -71,7 +71,7 @@ export default function SingUp() {
     const data = {
       first_name: firstName,
       last_name: lastName,
-      organization,
+      organization_id,
       email,
       password,
     }
@@ -95,7 +95,7 @@ export default function SingUp() {
           error ? <ErrorBalloon message={errorMessage} /> : null
         }
 
-        <select onChange={e => setOrganization(e.target.value)}>
+        <select onChange={e => setOrganization_id(e.target.value)}>
           <option value="">Organization</option>
           {
             organizationList.map( org => (

@@ -105,6 +105,7 @@ export const Modal = styled.div`
   background: #FFF;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
+  margin-bottom: 5%;
 `;
 
 export const Header = styled.p`
@@ -116,23 +117,11 @@ export const Header = styled.p`
   padding: 3px 0 3px 0;
 `;
 
-export const ImageUpload = styled.div`
-  width: 130px;
-  height: 130px;
-  border: solid 1px #DDD;
-  border-radius: 100%;
-  text-align: center;
-
-  input {
-    color: transparent;
-  }
-`;
-
 export const Input = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 5%;
 
   label {
     font-size: 15px;
@@ -149,7 +138,7 @@ export const Select = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5%;
+  margin-top: 5%;
 
   select {
     border: solid 1px #DDD;
@@ -167,6 +156,7 @@ export const Footer = styled.div`
   justify-content: flex-end;
   background: #EEE;
   padding: 3px 20px 3px 0;
+  margin-top: 5%;
 `;
 
 export const Button = styled.button`
@@ -179,3 +169,4 @@ export const Button = styled.button`
     color: ${props => props.colorHover};
   }
 `;
+

@@ -9,7 +9,6 @@ import {
   Modal,
   Content,
   Header,
-  ImageUpload,
   Input,
   Select,
   Button,
@@ -26,11 +25,13 @@ import {
 } from './styles';
 
 import imageTemp from '../../assets/temp-avatar-dog.jpg';
+import ImageUpload from '../../components/ImageUpload';
+import ImagePreview from '../../components/ImagePreview';
 import Alert from '../../components/Alert';
 import NavBar from '../../components/NavBar';
 import SearchAndFilter from '../../components/SearchAndFilter';
 
-function NewPet({ cancel, save }) {
+function NewPet({ onCancel, onSave }) {
 
   const token_bearer = sessionStorage.getItem('IAdopt_session');
 
@@ -39,8 +40,8 @@ function NewPet({ cancel, save }) {
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
-  const [image, setImage] = useState('image here');
   const [organization_id, setOrganization_id] = useState();
+  const [image, setImage] = useState([]);
 
   useEffect(() => {
     const [, token] = token_bearer.split(' ');
@@ -49,32 +50,46 @@ function NewPet({ cancel, save }) {
   }, []);
 
   function handlerCancel() {
-    cancel();
+    onCancel();
   }
 
   async function handlerSave() {
 
-    const data = {
+    const dataPet = {
       name,
       specie,
       gender,
       size,
       price: price || 0,
-      image,
       organization_id,
     }
 
-    await save(data);
-    cancel();
+    await onSave(image, dataPet);
+    onCancel();
+  }
+
+  function handleUploadImage(files) {
+
+    const filesData = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }))
+
+    setImage({ ...filesData[0] });
+  }
+
+  function handleRemoveImage() {
+    setImage([]);
   }
 
   return (
     <Content>
       <Modal>
         <Header>New Pet</Header>
-        <ImageUpload>
-          <input type='file' />
-        </ImageUpload>
+        {
+          image.length === 0 ? <ImageUpload onUpload={handleUploadImage} /> : <ImagePreview src={image.preview} onRemoveImage={handleRemoveImage} />
+        }
+
         <Input>
           <label>Name</label>
           <input type='text' value={name} onChange={e => setName(e.target.value)} required />
@@ -176,9 +191,6 @@ function EditPet({ cancel, save }) {
     <Content>
       <Modal>
         <Header>Edit Pet</Header>
-        <ImageUpload>
-          <input type='file' />
-        </ImageUpload>
         <Input>
           <label>Name</label>
           <input type='text' value={name} onChange={e => setName(e.target.value)} required />
@@ -273,12 +285,36 @@ export default function Pets() {
     setFilteredResults(result);
   }
 
-  async function createPet(petData) {
-    const response = await axios.post('http://localhost:4000/pets', petData, {
+  async function uploadImage(image) {
+    const imageData = new FormData();
+    imageData.append('file', image.file);
+
+    const image_response = await axios.post('http://localhost:4000/petsimage', imageData);
+    return image_response.data.id;
+  }
+
+  async function uploadData(fullData) {
+    const response = await axios.post('http://localhost:4000/pets', fullData, {
       headers: { Authorization: token_bearer }
     });
 
-    setPets([response.data, ...pets]);
+    return response;
+  }
+
+  async function createPet(image, petData) {
+
+    const id_image = await uploadImage(image);
+
+    const fullData = { ...petData, id_image };
+    console.log('FullData: ', fullData)
+
+    setTimeout(async () => {
+      const response = await uploadData(fullData);
+      setPets([response.data, ...pets]);
+    }, 1000);
+
+
+
     setAlertInfo({
       type: 'success',
       message: 'Pet successfully registered'
@@ -319,7 +355,8 @@ export default function Pets() {
         isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
       }
       {
-        isCreating ? <NewPet cancel={() => setIsCreating(false)} save={createPet} /> : null
+        isCreating ? <NewPet onCancel={() => setIsCreating(false)} onSave={createPet} /> : null
+
       }
       {
         isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} /> : null
