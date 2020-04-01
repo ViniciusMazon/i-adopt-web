@@ -24,7 +24,6 @@ import {
   Avatar
 } from './styles';
 
-import imageTemp from '../../assets/temp-avatar-dog.jpg';
 import ImageUpload from '../../components/ImageUpload';
 import ImagePreview from '../../components/ImagePreview';
 import Alert from '../../components/Alert';
@@ -248,7 +247,7 @@ export default function Pets() {
     async function initPetPage() {
       const [, token] = token_bearer.split(' ');
       var decoded = jwt.decode(token, { complete: true });
-      const response = await axios.get(`http://localhost:4000/pets?organization=${decoded.payload.org_id}`, {
+      const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}`, {
         headers: { Authorization: token_bearer }
       });
       setPets(response.data);
@@ -306,14 +305,10 @@ export default function Pets() {
     const id_image = await uploadImage(image);
 
     const fullData = { ...petData, id_image };
-    console.log('FullData: ', fullData)
+    console.log('FullData: ', fullData);
 
-    setTimeout(async () => {
-      const response = await uploadData(fullData);
-      setPets([response.data, ...pets]);
-    }, 1000);
-
-
+    const response = await uploadData(fullData);
+    setPets([response.data, ...pets]);
 
     setAlertInfo({
       type: 'success',
@@ -373,13 +368,14 @@ export default function Pets() {
           <TableHeaderRow width={'12%'}>Price</TableHeaderRow>
           <TableHeaderRow width={'13%'}>Date</TableHeaderRow>
           <TableHeaderRow width={'16%'}>Action</TableHeaderRow>
+          {console.log(pets)}
         </TableHeaderColumn>
         {
           (filteredResults.length > 0 ? filteredResults : pets).map(pet => (
             <TableColum key={pet.id}>
               <TableRow width={'8%'}>{pet.id}</TableRow>
               <TableRow width={'20%'}>
-                <Avatar src={imageTemp} />
+                <Avatar src={pet.url} />
                 {pet.name}
               </TableRow>
               <TableRow width={'8%'}>{pet.specie}</TableRow>
