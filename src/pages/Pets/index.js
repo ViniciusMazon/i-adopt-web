@@ -77,16 +77,13 @@ function NewPet({ onCancel, onSave }) {
     setImage({ ...filesData[0] });
   }
 
-  function handleRemoveImage() {
-    setImage([]);
-  }
 
   return (
     <Content>
       <Modal>
         <Header>New Pet</Header>
         {
-          image.length === 0 ? <ImageUpload onUpload={handleUploadImage} /> : <ImagePreview src={image.preview} onRemoveImage={handleRemoveImage} />
+          image.length === 0 ? <ImageUpload onUpload={handleUploadImage} /> : <ImagePreview src={image.preview} onRemoveImage={() => setImage([])} />
         }
 
         <Input>
@@ -131,44 +128,66 @@ function NewPet({ onCancel, onSave }) {
   );
 }
 
-function EditPet({ cancel, save }) {
-
-  const token_bearer = sessionStorage.getItem('IAdopt_session');
+function EditPet({ cancel, save, onChangeImage }) {
 
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-  const [price, setPrice] = useState()
   const [specie, setSpecie] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
-  const [image, setImage] = useState('image here');
-  const [organization_id, setOrganization_id] = useState();
-
-  function getDataStorage() {
-    let dataPet = sessionStorage.getItem('petDataEdit');
-    dataPet = JSON.parse(dataPet);
-    return dataPet;
-  }
+  const [price, setPrice] = useState('');
+  const [idImage, setIdImage] = useState(0);
+  const [url, setUrl] = useState('');
+  const [image, setImage] = useState([]);
 
 
   useEffect(() => {
-    const { id, name, price, specie, gender, size, image, organization_id } = getDataStorage();
+    function getDataStorage() {
+      let dataPet = sessionStorage.getItem('petDataEdit');
+      dataPet = JSON.parse(dataPet);
+      return dataPet;
+    }
+
+    const { id, name, specie, gender, size, price, id_image, url } = getDataStorage();
     setId(id);
     setName(name);
-    setPrice(price);
     setSpecie(specie);
     setGender(gender);
+    setPrice(price);
+    setIdImage(id_image)
     setSize(size);
-    setImage(image);
-    setOrganization_id(organization_id);
+    setUrl(url);
   }, []);
+
+  useEffect(() => {
+    if (image.length !== 0) {
+      setUrl(image.preview);
+    }
+  }, [image]);
+
 
   function handlerCancel() {
     cancel();
     sessionStorage.removeItem('petDataEdit');
   }
 
+  function handleUploadImage(files) {
+
+    const filesData = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }))
+
+    setImage({ ...filesData[0] });
+  }
+
   async function handlerSave() {
+
+    let new_id_image = 0;
+
+    if (image.length !== 0) {
+      new_id_image = await onChangeImage(image, idImage);
+    }
 
     const data = {
       id,
@@ -177,8 +196,8 @@ function EditPet({ cancel, save }) {
       gender,
       size,
       price: price || 0,
-      image,
-      organization_id,
+      id_image: new_id_image === 0 ? idImage : new_id_image,
+      url
     }
 
     await save(data);
@@ -190,6 +209,9 @@ function EditPet({ cancel, save }) {
     <Content>
       <Modal>
         <Header>Edit Pet</Header>
+        {
+          url.length === 0 ? <ImageUpload onUpload={handleUploadImage} /> : <ImagePreview src={url} onRemoveImage={() => setUrl('')} />
+        }
         <Input>
           <label>Name</label>
           <input type='text' value={name} onChange={e => setName(e.target.value)} required />
@@ -292,6 +314,10 @@ export default function Pets() {
     return image_response.data.id;
   }
 
+  async function destroyImage(id) {
+    await axios.delete(`http://localhost:4000/petsimage?id=${id}`);
+  }
+
   async function uploadData(fullData) {
     const response = await axios.post('http://localhost:4000/pets', fullData, {
       headers: { Authorization: token_bearer }
@@ -305,7 +331,6 @@ export default function Pets() {
     const id_image = await uploadImage(image);
 
     const fullData = { ...petData, id_image };
-    console.log('FullData: ', fullData);
 
     const response = await uploadData(fullData);
     setPets([response.data, ...pets]);
@@ -325,7 +350,14 @@ export default function Pets() {
     setIsEditing(true);
   }
 
+  async function editImage(image, id_old_image) {
+    const response = await uploadImage(image);
+    await destroyImage(id_old_image);
+    return response
+  }
+
   async function editPet(petData) {
+
     const response = await axios.put(`http://localhost:4000/pets`, petData, {
       headers: { Authorization: token_bearer }
     });
@@ -354,7 +386,7 @@ export default function Pets() {
 
       }
       {
-        isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} /> : null
+        isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} onChangeImage={editImage} /> : null
       }
       <SearchAndFilter searchFunction={search} filterFunction={filter} />
       <Table>

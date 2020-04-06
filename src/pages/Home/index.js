@@ -36,82 +36,82 @@ export default function Home({ match }) {
     getPets()
   }, []);
 
-  useEffect(() => {
-    function createStatistics() {
-      let dog = {
-        total: 0,
-        male: 0,
-        female: 0,
-        small: 0,
-        medium: 0,
-        big: 0
-      }
+  // useEffect(() => {
+  //   function createStatistics() {
+  //     let dog = {
+  //       total: 0,
+  //       male: 0,
+  //       female: 0,
+  //       small: 0,
+  //       medium: 0,
+  //       big: 0
+  //     }
 
-      let cat = {
-        total: 0,
-        male: 0,
-        female: 0,
-        small: 0,
-        medium: 0,
-        big: 0
-      }
+  //     let cat = {
+  //       total: 0,
+  //       male: 0,
+  //       female: 0,
+  //       small: 0,
+  //       medium: 0,
+  //       big: 0
+  //     }
 
-      pets.map(pet => {
-        if (pet.specie === 'dog') {
+  //     pets.map(pet => {
+  //       if (pet.specie === 'dog') {
 
-          dog.total++;
+  //         dog.total++;
 
-          if (pet.gender === 'male') {
-            dog.male++;
-          } else {
-            dog.female++;
-          }
+  //         if (pet.gender === 'male') {
+  //           dog.male++;
+  //         } else {
+  //           dog.female++;
+  //         }
 
-          switch (pet.size) {
-            case 'small':
-              dog.small++;
-              break;
-            case 'medium':
-              dog.medium++;
-              break;
-            case 'big':
-              dog.big++;
-              break;
-            default:
-              console.log('erro na estatistica de dog size')
-          }
-        } else {
+  //         switch (pet.size) {
+  //           case 'small':
+  //             dog.small++;
+  //             break;
+  //           case 'medium':
+  //             dog.medium++;
+  //             break;
+  //           case 'big':
+  //             dog.big++;
+  //             break;
+  //           default:
+  //             console.log('erro na estatistica de dog size')
+  //         }
+  //       } else {
 
-          cat.total++;
+  //         cat.total++;
 
-          if (pet.gender === 'male') {
-            cat.male++;
-          } else {
-            cat.female++;
-          }
+  //         if (pet.gender === 'male') {
+  //           cat.male++;
+  //         } else {
+  //           cat.female++;
+  //         }
 
-          switch (pet.size) {
-            case 'small':
-              cat.small++;
-              break;
-            case 'medium':
-              cat.medium++;
-              break;
-            case 'big':
-              cat.big++;
-              break;
-            default:
-              console.log('erro na estatistica de cat size')
-          }
-        }
-      });
+  //         switch (pet.size) {
+  //           case 'small':
+  //             cat.small++;
+  //             break;
+  //           case 'medium':
+  //             cat.medium++;
+  //             break;
+  //           case 'big':
+  //             cat.big++;
+  //             break;
+  //           default:
+  //             console.log('erro na estatistica de cat size')
+  //         }
+  //       }
+  //     });
 
-      setDogsInfo(dog);
-      setCatsInfo(cat);
-    }
+  //     setDogsInfo(dog);
+  //     setCatsInfo(cat);
+  //   }
 
-    createStatistics();
-  }, [pets]);
+  //   createStatistics();
+  // }, [pets]);
 
   return (
     <>
