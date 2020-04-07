@@ -402,6 +402,15 @@ export default function Pets() {
     });
 
     setPets(pets.filter(pet => pet.id !== id));
+
+    setAlertInfo({
+      type: 'success',
+      message: 'Pet successfully deleted'
+    });
+    setIsAlerting(true);
+    setTimeout(() => {
+      setIsAlerting(false);
+    }, 3000);
   }
 
   return (

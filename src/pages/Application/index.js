@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faCalendar, faRulerVertical, faMars, faCat } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../../components/NavBar';
-import imageTemp from '../../assets/temp-avatar-dog.jpg';
+import Alert from '../../components/Alert';
 
 import {
   Container,
@@ -182,6 +182,8 @@ export default function Application() {
 
   const [applicationsList, setApplicationsList] = useState([]);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [isAlerting, setIsAlerting] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({});
 
   const token_bearer = sessionStorage.getItem('IAdopt_session');
 
@@ -197,7 +199,6 @@ export default function Application() {
   }, []);
 
 
-
   function applicationReview(application_id) {
     setIsReviewing(true);
     sessionStorage.setItem('iAdopt_ApplicationId', application_id);
@@ -209,6 +210,15 @@ export default function Application() {
     });
 
     await applicationListLoad();
+
+    setAlertInfo({
+      type: 'success',
+      message: 'Status changed successfully'
+    });
+    setIsAlerting(true);
+    setTimeout(() => {
+      setIsAlerting(false);
+    }, 3000);
   }
 
   function statusColor(status) {
@@ -240,6 +250,9 @@ export default function Application() {
   return (
     <Container>
       <NavBar />
+      {
+        isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
+      }
       {
         isReviewing ? <ApplicationReview cancel={() => setIsReviewing(false)} changeStatus={applicationChangeStatus} /> : null
       }
