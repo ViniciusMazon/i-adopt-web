@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import passwordValidator from 'password-validator';
-import { useHistory } from 'react-router-dom';
 
 import './styles.css';
-import Navigation from '../../components/Navigation';
 import ErrorBalloon from '../../components/ErrorBalloon';
 
 export default function SingUp() {
@@ -89,7 +90,11 @@ export default function SingUp() {
       <div className="singup-image" />
 
       <form onSubmit={handleSubmit} className="singup-content">
-        <Navigation linkPath="/" />
+      <div className="navigation-container">
+      <Link to="/">
+        <FontAwesomeIcon icon={faArrowLeft} className="tab-icon" />
+      </Link>
+    </div>
 
         {
           error ? <ErrorBalloon message={errorMessage} /> : null

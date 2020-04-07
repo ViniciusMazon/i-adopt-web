@@ -12,10 +12,7 @@ import Login from '../src/pages/Login';
 import SingUp from '../src/pages/SingUp'
 import Home from '../src/pages/Home';
 import Pets from '../src/pages/Pets';
-import PetsCreate from '../src/pages/PetsCreate';
-import PetsEdit from '../src/pages/PetsEdit';
 import Application from '../src/pages/Application';
-import ApplicationReview from '../src/pages/ApplicationReview';
 import NotFound404 from '../src/pages/NotFound404';
 
 
@@ -56,17 +53,8 @@ const Routes = () => {
         <PrivateRoute exact path="/pets">
           <Pets />
         </PrivateRoute>
-        <PrivateRoute path="/pets/new">
-          <PetsCreate />
-        </PrivateRoute>
-        <PrivateRoute path="/pets/:id">
-          <PetsEdit />
-        </PrivateRoute>
         <PrivateRoute exact path="/applications">
           <Application />
-        </PrivateRoute>
-        <PrivateRoute path="/applications/review/:id">
-          <ApplicationReview />
         </PrivateRoute>
         <Route path='*'>
           <NotFound404 />
