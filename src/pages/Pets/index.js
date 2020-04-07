@@ -212,6 +212,7 @@ function EditPet({ cancel, save, onChangeImage, onDelete }) {
     setIsDeleting(true);
     await onDelete(id);
     cancel();
+    sessionStorage.removeItem('petDataEdit');
   }
 
   return (

@@ -9,7 +9,6 @@ import {
 import isAuthenticated from './auth/isAuthenticated';
 
 import Login from '../src/pages/Login';
-import SingUp from '../src/pages/SingUp'
 import Home from '../src/pages/Home';
 import Pets from '../src/pages/Pets';
 import Application from '../src/pages/Application';
@@ -43,9 +42,6 @@ const Routes = () => {
       <Switch>
         <Route exact path="/">
           <Login />
-        </Route>
-        <Route path="/singup">
-          <SingUp />
         </Route>
         <PrivateRoute path="/home">
           <Home />

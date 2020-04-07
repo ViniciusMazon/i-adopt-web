@@ -91,6 +91,7 @@ function ApplicationReview({ cancel, changeStatus }) {
   }
 
   function handlerCancel() {
+    sessionStorage.removeItem('iAdopt_ApplicationId');
     cancel();
   }
 
