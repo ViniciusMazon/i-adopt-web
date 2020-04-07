@@ -21,7 +21,8 @@ import {
   TableColum,
   TableRow,
   TableRowButton,
-  Avatar
+  Avatar,
+  ConfirmationBox
 } from './styles';
 
 import ImageUpload from '../../components/ImageUpload';
@@ -119,6 +120,7 @@ function NewPet({ onCancel, onSave }) {
             <option value="big">Big</option>
           </select>
         </Select>
+        <ConfirmationBox/>
         <Footer>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerCancel}>Cancel</Button>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerSave}>Save</Button>
@@ -128,7 +130,7 @@ function NewPet({ onCancel, onSave }) {
   );
 }
 
-function EditPet({ cancel, save, onChangeImage }) {
+function EditPet({ cancel, save, onChangeImage, onDelete }) {
 
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -139,6 +141,7 @@ function EditPet({ cancel, save, onChangeImage }) {
   const [idImage, setIdImage] = useState(0);
   const [url, setUrl] = useState('');
   const [image, setImage] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
   useEffect(() => {
@@ -205,6 +208,12 @@ function EditPet({ cancel, save, onChangeImage }) {
     sessionStorage.removeItem('petDataEdit');
   }
 
+  async function handlerDelete() {
+    setIsDeleting(true);
+    await onDelete(id);
+    cancel();
+  }
+
   return (
     <Content>
       <Modal>
@@ -245,8 +254,20 @@ function EditPet({ cancel, save, onChangeImage }) {
             <option value="big">Big</option>
           </select>
         </Select>
+        <ConfirmationBox>
+          {
+            isDeleting ? (
+              <>
+                Are you sure you want to delete this record?
+                <Button color={'#666'} colorHover={'#F67280'} onClick={() => setIsDeleting(false)}>No</Button>
+                <Button color={'#666'} colorHover={'#F67280'} onClick={handlerDelete}>Yes</Button>
+              </>
+            ) : null
+          }
+        </ConfirmationBox>
         <Footer>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerCancel}>Cancel</Button>
+          <Button color={'#666'} colorHover={'#F67280'} onClick={() => setIsDeleting(true)}>Delete</Button>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerSave}>Save</Button>
         </Footer>
       </Modal>
@@ -375,6 +396,14 @@ export default function Pets() {
     }, 3000);
   }
 
+  async function deletePet(id) {
+    await axios.delete(`http://localhost:4000/pets?id=${id}`, {
+      headers: { Authorization: token_bearer }
+    });
+
+    setPets(pets.filter(pet => pet.id !== id));
+  }
+
   return (
     <Container>
       <NavBar />
@@ -386,7 +415,7 @@ export default function Pets() {
 
       }
       {
-        isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} onChangeImage={editImage} /> : null
+        isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} onChangeImage={editImage} onDelete={deletePet} /> : null
       }
       <SearchAndFilter searchFunction={search} filterFunction={filter} />
       <Table>

@@ -150,13 +150,22 @@ export const Select = styled.div`
   }
 `;
 
+export const ConfirmationBox = styled.div`
+  width: 100%;
+  height: 5%;
+  display: flex;
+  background: #DDD;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+`;
+
 export const Footer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
   background: #EEE;
   padding: 3px 20px 3px 0;
-  margin-top: 5%;
 `;
 
 export const Button = styled.button`
@@ -164,7 +173,7 @@ export const Button = styled.button`
   background: transparent;
   color: ${props => props.color};
   font-weight: 500;
-
+  margin-left: 2%;
   :hover {
     color: ${props => props.colorHover};
   }
