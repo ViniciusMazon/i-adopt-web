@@ -101,7 +101,7 @@ function ApplicationReview({ cancel, changeStatus }) {
           Application Review
         </Header>
         <PetInfo>
-          <AvatarReview src={imageTemp} />
+          <AvatarReview src={applicationData.url} />
           <h1>{applicationData.name}</h1>
           <span style={{ marginBottom: 30 }}>
             <Status color={statusColor(applicationData.status)}>
@@ -259,7 +259,7 @@ export default function Application() {
             <TableColum key={application.application_id}>
               <TableRow width={'8%'}>{application.application_id}</TableRow>
               <TableRow width={'20%'}>
-                <Avatar src={imageTemp} />
+                <Avatar src={application.pet_url} />
                 {application.pet_name}
               </TableRow>
               <TableRow width={'8%'}>{application.pet_id}</TableRow>
