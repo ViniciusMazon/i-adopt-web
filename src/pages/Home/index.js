@@ -1,204 +1,98 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../../components/NavBar';
-import './styles.css';
-import iconApplication from '../../assets/icon-application.png';
-import iconHouse from '../../assets/icon-house.png';
-import iconDog from '../../assets/icon-dog.png';
-import iconCat from '../../assets/icon-cat.png';
+import BackgroundImage from '../../assets/home-bg.png';
 
-export default function Home({ match }) {
+import {
+  Container,
+  HorizontalBackground,
+  UserName,
+  ShelterInformation,
+  ShelterData,
+  ButtonGoApplication
+} from './styles';
 
-  const [userName, setUserName] = useState('');
-  const [pets, setPets] = useState([]);
-  const [dogsInfo, setDogsInfo] = useState({});
-  const [catsInfo, setCatsInfo] = useState({});
+export default function Home() {
 
-
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
+  const [dogGender, setDogGender] = useState({});
+  const [catGender, setCatGender] = useState({});
+  const [dogSize, SetDogSize] = useState({});
+  const [catSize, SetCatSize] = useState({});
+  const [dogApplication, setDogApplication] = useState({});
+  const [catApplication, setCatApplication] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function getPets() {
-      const response = await axios.get("http://localhost:4000/pets", {
-        headers: { Authorization: token_bearer }
-      });
-      setPets(response.data);
+    async function reportInit() {
+      const [, token] = token_bearer.split(' ');
+      var decoded = jwt.decode(token, { complete: true });
+      const response = await axios.get(`http://localhost:4000/report/organization?organization_id=${decoded.payload.org_id}`);
+      setDogGender(response.data.dog.gender);
+      setCatGender(response.data.cat.gender);
+      SetDogSize(response.data.dog.size);
+      SetCatSize(response.data.cat.size);
+      setDogApplication(response.data.dog.status);
+      setCatApplication(response.data.cat.status);
     }
 
-    const token_bearer = sessionStorage.getItem('IAdopt_session');
-    const [, token] = token_bearer.split(' ');
-    var decoded = jwt.decode(token, { complete: true });
-    console.log("token_decoded", decoded.payload);
-    setUserName(decoded.payload.user_name);
-    getPets()
+    setIsLoading(true);
+    reportInit();
+    setIsLoading(false);
   }, []);
 
-  // useEffect(() => {
-  //   function createStatistics() {
-  //     let dog = {
-  //       total: 0,
-  //       male: 0,
-  //       female: 0,
-  //       small: 0,
-  //       medium: 0,
-  //       big: 0
-  //     }
-
-  //     let cat = {
-  //       total: 0,
-  //       male: 0,
-  //       female: 0,
-  //       small: 0,
-  //       medium: 0,
-  //       big: 0
-  //     }
-
-  //     pets.map(pet => {
-  //       if (pet.specie === 'dog') {
-
-  //         dog.total++;
-
-  //         if (pet.gender === 'male') {
-  //           dog.male++;
-  //         } else {
-  //           dog.female++;
-  //         }
-
-  //         switch (pet.size) {
-  //           case 'small':
-  //             dog.small++;
-  //             break;
-  //           case 'medium':
-  //             dog.medium++;
-  //             break;
-  //           case 'big':
-  //             dog.big++;
-  //             break;
-  //           default:
-  //             console.log('erro na estatistica de dog size')
-  //         }
-  //       } else {
-
-  //         cat.total++;
-
-  //         if (pet.gender === 'male') {
-  //           cat.male++;
-  //         } else {
-  //           cat.female++;
-  //         }
-
-  //         switch (pet.size) {
-  //           case 'small':
-  //             cat.small++;
-  //             break;
-  //           case 'medium':
-  //             cat.medium++;
-  //             break;
-  //           case 'big':
-  //             cat.big++;
-  //             break;
-  //           default:
-  //             console.log('erro na estatistica de cat size')
-  //         }
-  //       }
-  //     });
-
-  //     setDogsInfo(dog);
-  //     setCatsInfo(cat);
-  //   }
-
-  //   createStatistics();
-  // }, [pets]);
-
   return (
-    <>
-      <div className="home-container">
-        <NavBar />
-        <div className="home-content">
-          <div className="board-container">
-
-            <h1>Hey {userName}, look at this!</h1>
-
-            <span>
-              <h2>Your applications</h2>
-              <div className="board-content">
-
-                <div className="board">
-                  <img src={iconHouse} className="board-icon" />
-                  <strong className="board-numbers">INOP</strong>
-                  <p>Pets adopted</p>
-                </div>
-
-                <div className="board">
-                  <img src={iconApplication} className="board-icon" />
-                  <strong className="board-numbers">INOP</strong>
-                  <p>Pending applications</p>
-                </div>
-              </div>
-            </span>
-
-            <span>
-              <h2>Your pets</h2>
-              <div className="board-content">
-
-                <div className="board">
-                  <div>
-                    <img src={iconDog} className="board-icon" />
-                  </div>
-                  <div>
-                    <span>
-                      <strong className="board-numbers">{dogsInfo.total}</strong>
-                      <p>Dogs</p>
-                    </span>
-                    <span className="board-gender">
-                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
-                      <p>{dogsInfo.female}</p>
-                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
-                      <p>{dogsInfo.male}</p>
-                    </span>
-                    <span className="board-size">
-                      <strong className="board-size-emphasis">S</strong>
-                      <p>{dogsInfo.small}</p>
-                      <strong className="board-size-emphasis">M</strong>
-                      <p>{dogsInfo.medium}</p>
-                      <strong className="board-size-emphasis">B</strong>
-                      <p>{dogsInfo.big}</p>
-                    </span>
-                  </div>
-                </div>
-                <div className="board">
-                  <div>
-                    <img src={iconCat} className="board-icon" />
-                  </div>
-                  <div>
-                    <span>
-                      <strong className="board-numbers">{catsInfo.total}</strong>
-                      <p>Cats</p>
-                    </span>
-                    <span className="board-gender">
-                      <FontAwesomeIcon icon={faVenus} className="board-info-icon" />
-                      <p>{catsInfo.female}</p>
-                      <FontAwesomeIcon icon={faMars} className="board-info-icon" />
-                      <p>{catsInfo.male}</p>
-                    </span>
-                    <span className="board-size">
-                      <strong className="board-size-emphasis">S</strong>
-                      <p>{catsInfo.small}</p>
-                      <strong className="board-size-emphasis">M</strong>
-                      <p>{catsInfo.medium}</p>
-                      <strong className="board-size-emphasis">B</strong>
-                      <p>{catsInfo.big}</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </span>
-          </div>
-        </div>
-      </div>
-    </>
+    <Container>
+      <NavBar />
+      <HorizontalBackground src={BackgroundImage}>
+        <UserName>Hey Vinicius!</UserName>
+        <ShelterInformation>Your shelter saved 7 lifes</ShelterInformation>
+      </HorizontalBackground>
+      {
+        isLoading ? <p>Loading...</p> : (
+          <ShelterData>
+            <th></th>
+            <th colspan="2">Gender</th>
+            <th colspan="3">Size</th>
+            <th colspan="2">Applications</th>
+            <tr>
+              <td></td>
+              <td>Female</td>
+              <td>Male</td>
+              <td>Small</td>
+              <td>Medium</td>
+              <td>Big</td>
+              <td>Rejected</td>
+              <td>Accepted</td>
+            </tr>
+            <tr>
+              <td>Dogs</td>
+              <td>{dogGender.female}</td>
+              <td>{dogGender.male}</td>
+              <td>{dogSize.small}</td>
+              <td>{dogSize.medium}</td>
+              <td>{dogSize.big}</td>
+              <td>{dogApplication.rejected}</td>
+              <td>{dogApplication.accept}</td>
+            </tr>
+            <tr>
+              <td>Cats</td>
+              <td>{catGender.female}</td>
+              <td>{catGender.male}</td>
+              <td>{catSize.small}</td>
+              <td>{catSize.medium}</td>
+              <td>{catSize.big}</td>
+              <td>{catApplication.rejected}</td>
+              <td>{catApplication.accept}</td>
+            </tr>
+          </ShelterData>
+        )
+      }
+      <ButtonGoApplication>
+        You have {catApplication.new + dogApplication.new} new applications, click here for review
+      </ButtonGoApplication>
+    </Container>
   );
 }
