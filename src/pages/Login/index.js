@@ -172,7 +172,7 @@ export default function Login() {
   const [isAlerting, setIsAlerting] = useState(false);
   const [alertInfo, setAlertInfo] = useState({});
 
-  async function auth(e) {
+    async function auth(e) {
     e.preventDefault();
 
     try {

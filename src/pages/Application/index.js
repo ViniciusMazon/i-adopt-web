@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faCalendar, faRulerVertical, faMars, faCat } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../../components/NavBar';
 import Alert from '../../components/Alert';
+import Pagination from '../../components/Pagination';
 
 import {
   Container,
@@ -181,24 +183,33 @@ function ApplicationReview({ cancel, changeStatus }) {
 
 export default function Application() {
 
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [applicationsList, setApplicationsList] = useState([]);
   const [isReviewing, setIsReviewing] = useState(false);
   const [isAlerting, setIsAlerting] = useState(false);
   const [alertInfo, setAlertInfo] = useState({});
 
-  const token_bearer = sessionStorage.getItem('IAdopt_session');
-
   async function applicationListLoad() {
-    const response = await axios.get('http://localhost:4000/applications', {
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${currentPage}`, {
       headers: { Authorization: token_bearer }
     });
-    setApplicationsList(response.data);
+    const { applications, total } = response.data;
+    setApplicationsList(applications);
+    setTotalPage(total);
   }
 
   useEffect(() => {
     applicationListLoad();
   }, []);
 
+  function nextPage(page) {
+    console.log(page);
+  }
 
   function applicationReview(application_id) {
     setIsReviewing(true);
@@ -293,6 +304,7 @@ export default function Application() {
           ))
         }
       </Table>
+      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} />
     </Container >
   );
 }

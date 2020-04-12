@@ -30,6 +30,7 @@ import ImagePreview from '../../components/ImagePreview';
 import Alert from '../../components/Alert';
 import NavBar from '../../components/NavBar';
 import SearchAndFilter from '../../components/SearchAndFilter';
+import Pagination from '../../components/Pagination';
 
 function NewPet({ onCancel, onSave }) {
 
@@ -120,7 +121,7 @@ function NewPet({ onCancel, onSave }) {
             <option value="big">Big</option>
           </select>
         </Select>
-        <ConfirmationBox/>
+        <ConfirmationBox />
         <Footer>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerCancel}>Cancel</Button>
           <Button color={'#666'} colorHover={'#F67280'} onClick={handlerSave}>Save</Button>
@@ -278,6 +279,10 @@ function EditPet({ cancel, save, onChangeImage, onDelete }) {
 
 export default function Pets() {
 
+  const token_bearer = sessionStorage.getItem('IAdopt_session');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [pets, setPets] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
   const [isAlerting, setIsAlerting] = useState(false);
@@ -285,20 +290,32 @@ export default function Pets() {
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const token_bearer = sessionStorage.getItem('IAdopt_session');
-
   useEffect(() => {
     async function initPetPage() {
       const [, token] = token_bearer.split(' ');
       var decoded = jwt.decode(token, { complete: true });
-      const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}`, {
+      const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${currentPage}`, {
         headers: { Authorization: token_bearer }
       });
-      setPets(response.data);
+      const { pets, total } = response.data;
+      setPets(pets);
+      setTotalPage(total);
     }
 
     initPetPage();
   }, []);
+
+
+  async function nextPage(page) {
+    setCurrentPage(page);
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${page}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { pets, total } = response.data;
+    setPets(pets);
+  }
 
   function search(searchValue) {
     if (searchValue) {
@@ -466,6 +483,7 @@ export default function Pets() {
           ))
         }
       </Table>
+      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} />
     </Container>
   );
 }
