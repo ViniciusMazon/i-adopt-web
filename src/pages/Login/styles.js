@@ -23,7 +23,7 @@ export const Content = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
   form {
@@ -32,6 +32,7 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15%;
   }
 
   img {
@@ -119,4 +120,9 @@ export const Navigation = styled.p`
   :hover {
   text-decoration: underline;
   }
+`;
+
+export const AlertZone = styled.div`
+  width: 100%;
+  height: 70px;
 `;

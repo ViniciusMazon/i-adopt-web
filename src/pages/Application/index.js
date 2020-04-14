@@ -32,7 +32,8 @@ import {
   Line,
   TextArea,
   Footer,
-  Button
+  Button,
+  AlertZone
 } from './styles';
 
 
@@ -261,10 +262,12 @@ export default function Application() {
 
   return (
     <Container>
-      <NavBar />
-      {
-        isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
-      }
+      <NavBar active={'applications'} />
+      <AlertZone>
+        {
+          isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
+        }
+      </AlertZone>
       {
         isReviewing ? <ApplicationReview cancel={() => setIsReviewing(false)} changeStatus={applicationChangeStatus} /> : null
       }
@@ -304,7 +307,7 @@ export default function Application() {
           ))
         }
       </Table>
-      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} />
+      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} active={currentPage - 1} />
     </Container >
   );
 }

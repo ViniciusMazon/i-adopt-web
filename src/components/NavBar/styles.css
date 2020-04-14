@@ -5,3 +5,11 @@
 #navBar-logo {
   height: 4vh;
 }
+
+.nav-link li a {
+  color: tomato;
+}
+
+.active {
+  color: #F45D73 !important;
+}

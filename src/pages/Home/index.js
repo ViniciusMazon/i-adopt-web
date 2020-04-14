@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
@@ -15,6 +16,8 @@ import {
 } from './styles';
 
 export default function Home() {
+
+  let history = useHistory();
 
   const token_bearer = sessionStorage.getItem('IAdopt_session');
   const [dogGender, setDogGender] = useState({});
@@ -45,10 +48,10 @@ export default function Home() {
 
   return (
     <Container>
-      <NavBar />
+      <NavBar active={'home'}/>
       <HorizontalBackground src={BackgroundImage}>
         <UserName>Hey Vinicius!</UserName>
-        <ShelterInformation>Your shelter saved 7 lifes</ShelterInformation>
+        <ShelterInformation>Your shelter saved {catApplication.accept + dogApplication.accept} lifes</ShelterInformation>
       </HorizontalBackground>
       {
         isLoading ? <p>Loading...</p> : (
@@ -90,7 +93,7 @@ export default function Home() {
           </ShelterData>
         )
       }
-      <ButtonGoApplication>
+      <ButtonGoApplication onClick={() => history.push('/applications')}>
         You have {catApplication.new + dogApplication.new} new applications, click here for review
       </ButtonGoApplication>
     </Container>

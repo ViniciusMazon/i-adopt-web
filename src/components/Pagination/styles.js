@@ -11,9 +11,9 @@ export const Container = styled.div`
 export const Button = styled.button`
   width: 30px;
   height: 30px;
-  background: none;
-  color: #F45D73;
-  border: 1px solid #F45D73;
+  background: ${props => props.bgColor};
+  border: none;
+  color: ${props => props.color};
   border-radius: 100%;
   margin-right: 4px;
   transition: .2s;

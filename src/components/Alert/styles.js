@@ -5,11 +5,10 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: flex-end;
-
 `;
 
 export const Content = styled.div`
-  width: 15%;
+  width: 300px;
   height: 60px;
   display: flex;
   justify-content: flex-start;

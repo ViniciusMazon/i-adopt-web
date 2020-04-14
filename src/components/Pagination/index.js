@@ -5,7 +5,7 @@ import {
   Button
 } from './styles';
 
-export default function Pagination({ numberOfPages, selectPage }) {
+export default function Pagination({ numberOfPages, selectPage, active }) {
 
   function handlerChangePage(e) {
     selectPage(e.target.innerText);
@@ -15,7 +15,10 @@ export default function Pagination({ numberOfPages, selectPage }) {
     <Container>
       {
         numberOfPages.map(page =>
-          <Button onClick={e => handlerChangePage(e)}>{page + 1}</Button>
+          <Button
+            color={active === page? '#FFF': '#F45D73'}
+            bgColor={active === page? '#F45D73': 'none'}
+            onClick={e => handlerChangePage(e)}>{page + 1}</Button>
         )
       }
     </Container>

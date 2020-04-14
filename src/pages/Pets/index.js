@@ -22,7 +22,8 @@ import {
   TableRow,
   TableRowButton,
   Avatar,
-  ConfirmationBox
+  ConfirmationBox,
+  AlertZone
 } from './styles';
 
 import ImageUpload from '../../components/ImageUpload';
@@ -87,7 +88,6 @@ function NewPet({ onCancel, onSave }) {
         {
           image.length === 0 ? <ImageUpload onUpload={handleUploadImage} /> : <ImagePreview src={image.preview} onRemoveImage={() => setImage([])} />
         }
-
         <Input>
           <label>Name</label>
           <input type='text' value={name} onChange={e => setName(e.target.value)} required />
@@ -187,10 +187,10 @@ function EditPet({ cancel, save, onChangeImage, onDelete }) {
 
   async function handlerSave() {
 
-    let new_id_image = 0;
+    var newIdImage = 0;
 
     if (image.length !== 0) {
-      new_id_image = await onChangeImage(image, idImage);
+      newIdImage = await onChangeImage(image, idImage);
     }
 
     const data = {
@@ -200,8 +200,7 @@ function EditPet({ cancel, save, onChangeImage, onDelete }) {
       gender,
       size,
       price: price || 0,
-      id_image: new_id_image === 0 ? idImage : new_id_image,
-      url
+      id_image: newIdImage === 0 ? idImage : newIdImage.id
     }
 
     await save(data);
@@ -350,7 +349,7 @@ export default function Pets() {
     imageData.append('file', image.file);
 
     const image_response = await axios.post('http://localhost:4000/petsimage', imageData);
-    return image_response.data.id;
+    return image_response.data;
   }
 
   async function destroyImage(id) {
@@ -367,12 +366,25 @@ export default function Pets() {
 
   async function createPet(image, petData) {
 
-    const id_image = await uploadImage(image);
+    const { id: id_image, url } = await uploadImage(image);
 
     const fullData = { ...petData, id_image };
 
     const response = await uploadData(fullData);
-    setPets([response.data, ...pets]);
+    const { id, name, specie, gender, size, price, organization_id, creation_date } = response.data;
+    const newPet = {
+      id,
+      name,
+      specie,
+      gender,
+      size,
+      price,
+      id_image,
+      organization_id,
+      creation_date,
+      url
+    }
+    setPets([newPet, ...pets]);
 
     setAlertInfo({
       type: 'success',
@@ -401,9 +413,13 @@ export default function Pets() {
       headers: { Authorization: token_bearer }
     });
 
+    const newPet = await axios.get(`http://localhost:4000/pets/details?id=${response.data.id}`, {
+      headers: { Authorization: token_bearer }
+    });
+
     const otherPets = pets.filter(pet => pet.id !== petData.id);
 
-    setPets([response.data, ...otherPets]);
+    setPets([newPet.data, ...otherPets]);
     setAlertInfo({
       type: 'success',
       message: 'Pet successfully edited'
@@ -433,10 +449,12 @@ export default function Pets() {
 
   return (
     <Container>
-      <NavBar />
-      {
-        isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
-      }
+      <NavBar active={'pets'} />
+      <AlertZone>
+        {
+          isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
+        }
+      </AlertZone>
       {
         isCreating ? <NewPet onCancel={() => setIsCreating(false)} onSave={createPet} /> : null
 
@@ -483,7 +501,7 @@ export default function Pets() {
           ))
         }
       </Table>
-      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} />
+      <Pagination numberOfPages={Array.from(Array(totalPage).keys())} selectPage={nextPage} active={currentPage - 1} />
     </Container>
   );
 }

@@ -179,3 +179,7 @@ export const Button = styled.button`
   }
 `;
 
+export const AlertZone = styled.div`
+  width: 100%;
+  height: 70px;
+`;

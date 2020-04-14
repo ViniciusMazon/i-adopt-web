@@ -10,6 +10,7 @@ import {
   SideBackground,
   Content,
   Navigation,
+  AlertZone
 } from './styles';
 
 import logo from '../../assets/logo.png';
@@ -172,7 +173,7 @@ export default function Login() {
   const [isAlerting, setIsAlerting] = useState(false);
   const [alertInfo, setAlertInfo] = useState({});
 
-    async function auth(e) {
+  async function auth(e) {
     e.preventDefault();
 
     try {
@@ -211,16 +212,18 @@ export default function Login() {
       {
         isRegistering ? <SingUp back={() => setIsRegistering(false)} onSuccessfulRegistration={successfulRegistrationAlert} /> : (
           <Content>
-            {
-              isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
-            }
+            <AlertZone>
+              {
+                isAlerting ? <Alert type={alertInfo.type} message={alertInfo.message} /> : null
+              }
+            </AlertZone>
             <form>
               <img src={logo} />
               <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
               <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
               <button type="button" onClick={auth}>Ok</button>
+              <Navigation position={'center'} onClick={() => setIsRegistering(true)}>Don't have an account?</Navigation>
             </form>
-            <Navigation position={'center'} onClick={() => setIsRegistering(true)}>Don't have an account?</Navigation>
           </Content>
         )
       }
