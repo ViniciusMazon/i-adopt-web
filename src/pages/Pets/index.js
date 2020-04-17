@@ -30,7 +30,7 @@ import ImageUpload from '../../components/ImageUpload';
 import ImagePreview from '../../components/ImagePreview';
 import Alert from '../../components/Alert';
 import NavBar from '../../components/NavBar';
-import SearchAndFilter from '../../components/SearchAndFilter';
+import SearchAndFilter from './components/SearchAndFilter';
 import Pagination from '../../components/Pagination';
 
 function NewPet({ onCancel, onSave }) {
@@ -283,7 +283,11 @@ export default function Pets() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [pets, setPets] = useState([]);
-  const [filteredResults, setFilteredResults] = useState([]);
+  const [filters, setFilters] = useState({
+    specie: "'dog', 'cat'",
+    gender: "'male', 'female'",
+    size: "'small','medium','big'"
+  });
   const [isAlerting, setIsAlerting] = useState(false);
   const [alertInfo, setAlertInfo] = useState({});
   const [isCreating, setIsCreating] = useState(false);
@@ -293,12 +297,13 @@ export default function Pets() {
     async function initPetPage() {
       const [, token] = token_bearer.split(' ');
       var decoded = jwt.decode(token, { complete: true });
-      const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${currentPage}`, {
+      const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${currentPage}&specie=${filters.specie}&gender=${filters.gender}&size=${filters.size}`, {
         headers: { Authorization: token_bearer }
       });
       const { pets, total } = response.data;
       setPets(pets);
       setTotalPage(total);
+
     }
 
     initPetPage();
@@ -309,7 +314,7 @@ export default function Pets() {
     setCurrentPage(page);
     const [, token] = token_bearer.split(' ');
     var decoded = jwt.decode(token, { complete: true });
-    const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${page}`, {
+    const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${page}&specie=${filters.specie}&gender=${filters.gender}&size=${filters.size}`, {
       headers: { Authorization: token_bearer }
     });
     const { pets, total } = response.data;
@@ -317,31 +322,20 @@ export default function Pets() {
   }
 
   function search(searchValue) {
-    if (searchValue) {
-      var searchResult = pets.filter(pet => pet.name.toLowerCase() === searchValue.toLowerCase());
-      setFilteredResults(searchResult);
-    } else {
-      setFilteredResults([]);
-    }
+
   }
 
-  function filter(filters) {
+  async function filter(filters) {
 
-    var result = [];
-
-    if (filters.specie) {
-      result.length !== 0 ? result = result.filter(pet => pet.specie === filters.specie) : result = pets.filter(pet => pet.specie === filters.specie);
-    }
-
-    if (filters.gender) {
-      result.length !== 0 ? result = result.filter(pet => pet.gender === filters.gender) : result = pets.filter(pet => pet.gender === filters.gender);
-    }
-
-    if (filters.size) {
-      result.length !== 0 ? result = result.filter(pet => pet.size === filters.size) : result = pets.filter(pet => pet.size === filters.size);
-    }
-
-    setFilteredResults(result);
+    setFilters(filters);
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${currentPage}&specie=${filters.specie}&gender=${filters.gender}&size=${filters.size}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { pets, total } = response.data;
+    setPets(pets);
+    setTotalPage(total);
   }
 
   async function uploadImage(image) {
@@ -477,7 +471,7 @@ export default function Pets() {
           {console.log(pets)}
         </TableHeaderColumn>
         {
-          (filteredResults.length > 0 ? filteredResults : pets).map(pet => (
+          pets.map(pet => (
             <TableColum key={pet.id}>
               <TableRow width={'8%'}>{pet.id}</TableRow>
               <TableRow width={'20%'}>

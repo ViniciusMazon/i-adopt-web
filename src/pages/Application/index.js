@@ -8,6 +8,7 @@ import { faAngleRight, faCalendar, faRulerVertical, faMars, faCat } from '@forta
 import NavBar from '../../components/NavBar';
 import Alert from '../../components/Alert';
 import Pagination from '../../components/Pagination';
+import SearchAndFilter from './components/index';
 
 import {
   Container,
@@ -189,6 +190,9 @@ export default function Application() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [applicationsList, setApplicationsList] = useState([]);
+  const [filters, setFilters] = useState({
+    status: "'accept','new','adopted','rejected','canceled'"
+  });
   const [isReviewing, setIsReviewing] = useState(false);
   const [isAlerting, setIsAlerting] = useState(false);
   const [alertInfo, setAlertInfo] = useState({});
@@ -196,7 +200,7 @@ export default function Application() {
   async function applicationListLoad() {
     const [, token] = token_bearer.split(' ');
     var decoded = jwt.decode(token, { complete: true });
-    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${currentPage}`, {
+    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${currentPage}&status=${filters.status}`, {
       headers: { Authorization: token_bearer }
     });
     const { applications, total } = response.data;
@@ -208,8 +212,15 @@ export default function Application() {
     applicationListLoad();
   }, []);
 
-  function nextPage(page) {
-    console.log(page);
+  async function nextPage(page) {
+    setCurrentPage(page);
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${page}&status=${filters.status}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { applications, total } = response.data;
+    setApplicationsList(applications);
   }
 
   function applicationReview(application_id) {
@@ -259,6 +270,20 @@ export default function Application() {
     return color;
   }
 
+  function search() {}
+
+  async function filter(filters) {
+    setFilters(filters);
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${currentPage}&status=${filters.status}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { applications, total } = response.data;
+    setApplicationsList(applications);
+    setTotalPage(total);
+  }
+
 
   return (
     <Container>
@@ -271,6 +296,7 @@ export default function Application() {
       {
         isReviewing ? <ApplicationReview cancel={() => setIsReviewing(false)} changeStatus={applicationChangeStatus} /> : null
       }
+      <SearchAndFilter searchFunction={search} filterFunction={filter} />
       <Table>
         <TableHeaderColumn>
           <TableHeaderRow width={'8%'}>ID</TableHeaderRow>
