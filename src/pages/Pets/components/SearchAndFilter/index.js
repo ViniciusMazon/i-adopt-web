@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faSearch, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import {
   Container,
@@ -10,15 +10,33 @@ import {
   Button
 } from './styles';
 
-export default function SearchAndFilter({ searchFunction, filterFunction }) {
+export default function SearchAndFilter({ searchFunction, resetSearch, filterFunction }) {
 
-  const [searchText, setSearchText] = useState('');
+  const [searchById, setSearchById] = useState(0);
+  const [searchByName, setSearchByName] = useState('');
   const [filterSpecie, setFilterSpecie] = useState("'dog','cat'");
   const [filterGender, setFilterGender] = useState("'female', 'male'");
   const [filterSize, setFilterSize] = useState("'small', 'medium', 'big'");
 
+  async function setSearchValue(value) {
+
+    const convertedValue = parseInt(value);
+
+    if (isNaN(convertedValue)) {
+      setSearchByName(value);
+      setSearchById(0);
+    } else if (Number.isInteger(convertedValue)) {
+      setSearchById(convertedValue);
+      setSearchByName('');
+    }
+  }
+
   function handlerSearch() {
-    searchFunction(searchText);
+    if (searchById === 0 && searchByName === '') {
+      resetSearch();
+    } else {
+      searchFunction(searchById, searchByName);
+    }
   }
 
   function handleFilter() {
@@ -35,7 +53,7 @@ export default function SearchAndFilter({ searchFunction, filterFunction }) {
     <Container>
 
       <Box>
-        <Text className="text" type="text" placeholder="Type to search" value={searchText} onChange={e => setSearchText(e.target.value)} />
+        <Text className="text" placeholder="Search by name or id" onChange={e => setSearchValue(e.target.value)} />
         <Button className="button" onClick={handlerSearch}>
           <a href="#">
             <FontAwesomeIcon icon={faSearch} className="menuBar-icon" color={"#F67280"} />

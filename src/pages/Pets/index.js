@@ -309,6 +309,8 @@ export default function Pets() {
     initPetPage();
   }, []);
 
+  useEffect(() => console.log(pets), [pets]);
+
 
   async function nextPage(page) {
     setCurrentPage(page);
@@ -319,10 +321,27 @@ export default function Pets() {
     });
     const { pets, total } = response.data;
     setPets(pets);
+
   }
 
-  function search(searchValue) {
+  async function resetSearch() {
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/pets?organization_id=${decoded.payload.org_id}&page=${currentPage}&specie=${filters.specie}&gender=${filters.gender}&size=${filters.size}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { pets, total } = response.data;
+    setPets(pets);
+    setTotalPage(total);
+  }
 
+  async function search(pet_id, pet_name) {
+    const response = await axios.get(`http://localhost:4000/pets/details?id=${pet_id}&name=${pet_name}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const pets = response.data;
+    setPets(pets);
+    setTotalPage(0);
   }
 
   async function filter(filters) {
@@ -413,7 +432,7 @@ export default function Pets() {
 
     const otherPets = pets.filter(pet => pet.id !== petData.id);
 
-    setPets([newPet.data, ...otherPets]);
+    setPets([newPet.data[0], ...otherPets]);
     setAlertInfo({
       type: 'success',
       message: 'Pet successfully edited'
@@ -456,7 +475,7 @@ export default function Pets() {
       {
         isEditing ? <EditPet cancel={() => setIsEditing(false)} save={editPet} onChangeImage={editImage} onDelete={deletePet} /> : null
       }
-      <SearchAndFilter searchFunction={search} filterFunction={filter} />
+      <SearchAndFilter searchFunction={search} resetSearch={resetSearch} filterFunction={filter} />
       <Table>
         <ButtonNewPet onClick={() => setIsCreating(true)}>Create new</ButtonNewPet>
         <TableHeaderColumn>
@@ -468,7 +487,6 @@ export default function Pets() {
           <TableHeaderRow width={'12%'}>Price</TableHeaderRow>
           <TableHeaderRow width={'13%'}>Date</TableHeaderRow>
           <TableHeaderRow width={'16%'}>Action</TableHeaderRow>
-          {console.log(pets)}
         </TableHeaderColumn>
         {
           pets.map(pet => (
@@ -483,13 +501,8 @@ export default function Pets() {
               <TableRow width={'8%'}>{pet.size}</TableRow>
               <TableRow width={'12%'}>{pet.price === 0 ? 'Free' : pet.price}</TableRow>
               <TableRow width={'13%'}>{pet.creation_date.split('T')[0]}</TableRow >
-              <TableRowButton width={'6%'} onClick={() => handlerEdit(pet)}>
+              <TableRowButton width={'16%'} onClick={() => handlerEdit(pet)}>
                 Edit <FontAwesomeIcon icon={faAngleRight} color={'#F67280'} />
-              </TableRowButton>
-              <TableRowButton width={'10%'}>
-                <Link to={`/pets/application/${pet.id}`}>
-                  Application <FontAwesomeIcon icon={faAngleRight} color={'#F67280'} />
-                </Link>
               </TableRowButton>
             </TableColum>
           ))
