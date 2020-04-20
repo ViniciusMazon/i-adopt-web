@@ -46,10 +46,10 @@ function ApplicationReview({ cancel, changeStatus }) {
 
   useEffect(() => {
     async function applicationDataLoad(application_id) {
-      const response = await axios.get(`http://localhost:4000/applications/review?id=${application_id}`, {
+      const response = await axios.get(`http://localhost:4000/applications/review?id=${application_id}&page=1`, {
         headers: { Authorization: token_bearer }
       });
-      setApplicationData(response.data);
+      setApplicationData(response.data.applications[0]);
     }
 
     const application_id = sessionStorage.getItem('iAdopt_ApplicationId');
@@ -84,7 +84,7 @@ function ApplicationReview({ cancel, changeStatus }) {
 
   async function handlerChangeStatus(newStatus) {
 
-    const applicationId = applicationData.id_application;
+    const applicationId = applicationData.application_id;
     const newStatusData = {
       status: newStatus
     }
@@ -106,7 +106,7 @@ function ApplicationReview({ cancel, changeStatus }) {
           Application Review
         </Header>
         <PetInfo>
-          <AvatarReview src={applicationData.url} />
+          <AvatarReview src={applicationData.pet_url} />
           <h1>{applicationData.name}</h1>
           <span style={{ marginBottom: 30 }}>
             <Status color={statusColor(applicationData.status)}>
@@ -136,7 +136,7 @@ function ApplicationReview({ cancel, changeStatus }) {
           <PetData>
             <Section>
               <Title>About the tutor</Title>
-              <Line>Name: {applicationData.first_name + ' ' + applicationData.last_name}</Line>
+              <Line>Name: {applicationData.tutor_name + ' ' + applicationData.tutor_last_name}</Line>
               <Line>Age: {applicationData.date_of_birth}</Line>
               <Line>Marital status: {applicationData.marital_status}</Line>
               <Line>Profession: {applicationData.profession}</Line>
@@ -146,7 +146,7 @@ function ApplicationReview({ cancel, changeStatus }) {
               <Line>Type of residence: {applicationData.type_of_residence}</Line>
               <Line>Number of adults at home: {applicationData.adult_residents}</Line>
               <Line>Number of children at home: {applicationData.children_residents}</Line>
-              <Line>Has smokers at home: {applicationData.has_smokers}</Line>
+              <Line>Has smokers at home: {applicationData.has_smokers? 'Yes': 'No'}</Line>
               <Line>Address: {
                 applicationData.street + ', ' +
                 applicationData.num + ', ' +
@@ -157,10 +157,10 @@ function ApplicationReview({ cancel, changeStatus }) {
             </Section>
             <Section>
               <Title>Historic</Title>
-              <Line>Have you adopted an animal before? {applicationData.already_adopted}</Line>
-              <Line>Are there other animals at home? {applicationData.animals_home}</Line>
-              <Line>Have any dogs or cats in the house been ill in the past few months? {applicationData.sick_animals_home}</Line>
-              <Line>Are you aware that you will have to add food, vaccines and veterinary care to your budget? {applicationData.add_budget_spend}</Line>
+              <Line>Have you adopted an animal before? {applicationData.already_adopted? 'Yes': 'No'}</Line>
+              <Line>Are there other animals at home? {applicationData.animals_home? 'Yes': 'No'}</Line>
+              <Line>Have any dogs or cats in the house been ill in the past few months? {applicationData.sick_animals_home? 'Yes': 'No'}</Line>
+              <Line>Are you aware that you will have to add food, vaccines and veterinary care to your budget? {applicationData.add_budget_spend? 'Yes': 'No'}</Line>
               <Line>Why do you want to adopt the  {applicationData.name}</Line>
               <TextArea>{applicationData.why_want_adopt}</TextArea>
               <Line>Do you have any questions about the adoption process or the  {applicationData.name} ?</Line>
@@ -212,6 +212,10 @@ export default function Application() {
     applicationListLoad();
   }, []);
 
+  useEffect(() => {
+    console.log(applicationsList)
+  }, [applicationsList])
+
   async function nextPage(page) {
     setCurrentPage(page);
     const [, token] = token_bearer.split(' ');
@@ -222,6 +226,27 @@ export default function Application() {
     const { applications, total } = response.data;
     setApplicationsList(applications);
   }
+
+  async function resetSearch() {
+    const [, token] = token_bearer.split(' ');
+    var decoded = jwt.decode(token, { complete: true });
+    const response = await axios.get(`http://localhost:4000/applications?organization_id=${decoded.payload.org_id}&page=${currentPage}&status=${filters.status}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { applications, total } = response.data;
+    setApplicationsList(applications);
+    setTotalPage(total);
+  }
+
+  async function search(app_id, pet_name) {
+    const response = await axios.get(`http://localhost:4000/applications/review?id=${app_id}&pet_name=${pet_name}`, {
+      headers: { Authorization: token_bearer }
+    });
+    const { applications, total } = response.data;
+    setApplicationsList(applications);
+    setTotalPage(total);
+  }
+
 
   function applicationReview(application_id) {
     setIsReviewing(true);
@@ -270,7 +295,7 @@ export default function Application() {
     return color;
   }
 
-  function search() {}
+
 
   async function filter(filters) {
     setFilters(filters);
@@ -296,7 +321,7 @@ export default function Application() {
       {
         isReviewing ? <ApplicationReview cancel={() => setIsReviewing(false)} changeStatus={applicationChangeStatus} /> : null
       }
-      <SearchAndFilter searchFunction={search} filterFunction={filter} />
+      <SearchAndFilter searchFunction={search} resetSearch={resetSearch} filterFunction={filter} />
       <Table>
         <TableHeaderColumn>
           <TableHeaderRow width={'8%'}>ID</TableHeaderRow>
