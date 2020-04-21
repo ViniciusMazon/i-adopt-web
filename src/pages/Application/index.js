@@ -107,7 +107,7 @@ function ApplicationReview({ cancel, changeStatus }) {
         </Header>
         <PetInfo>
           <AvatarReview src={applicationData.pet_url} />
-          <h1>{applicationData.name}</h1>
+          <h1>{applicationData.pet_name}</h1>
           <span style={{ marginBottom: 30 }}>
             <Status color={statusColor(applicationData.status)}>
               <StatusText color={statusColor(applicationData.status)}>{applicationData.status}</StatusText>

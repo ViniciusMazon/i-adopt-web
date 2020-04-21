@@ -32,7 +32,8 @@ export default function Home() {
     async function reportInit() {
       const [, token] = token_bearer.split(' ');
       var decoded = jwt.decode(token, { complete: true });
-      const response = await axios.get(`http://localhost:4000/report/organization?organization_id=${decoded.payload.org_id}`);
+      const response = await axios.get(`http://localhost:4000/report/organization?organization_id=${decoded.payload.org_id}`, {
+        headers: { Authorization: token_bearer }});
       setDogGender(response.data.dog.gender);
       setCatGender(response.data.cat.gender);
       SetDogSize(response.data.dog.size);
@@ -48,7 +49,7 @@ export default function Home() {
 
   return (
     <Container>
-      <NavBar active={'home'}/>
+      <NavBar active={'home'} />
       <HorizontalBackground src={BackgroundImage}>
         <UserName>Hey Vinicius!</UserName>
         <ShelterInformation>Your shelter saved {catApplication.accept + dogApplication.accept} lifes</ShelterInformation>

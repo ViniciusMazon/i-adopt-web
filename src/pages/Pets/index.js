@@ -309,9 +309,6 @@ export default function Pets() {
     initPetPage();
   }, []);
 
-  useEffect(() => console.log(pets), [pets]);
-
-
   async function nextPage(page) {
     setCurrentPage(page);
     const [, token] = token_bearer.split(' ');
@@ -361,12 +358,16 @@ export default function Pets() {
     const imageData = new FormData();
     imageData.append('file', image.file);
 
-    const image_response = await axios.post('http://localhost:4000/petsimage', imageData);
+    const image_response = await axios.post('http://localhost:4000/petsimage', imageData, {
+      headers: { Authorization: token_bearer }
+    });
     return image_response.data;
   }
 
   async function destroyImage(id) {
-    await axios.delete(`http://localhost:4000/petsimage?id=${id}`);
+    await axios.delete(`http://localhost:4000/petsimage?id=${id}`, {
+      headers: { Authorization: token_bearer }
+    });
   }
 
   async function uploadData(fullData) {
