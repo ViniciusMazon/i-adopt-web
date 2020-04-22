@@ -41,7 +41,7 @@ export const Content = styled.div`
   }
 
   input {
-    width: 100%;
+    width: 400px;
     height: 45px;
     border: none;
     font-size: 16px;
@@ -57,7 +57,7 @@ export const Content = styled.div`
   }
 
   select {
-    width: 100%;
+    width: 400px;
     height: 45px;
     border: none;
     font-size: 16px;
@@ -83,7 +83,7 @@ export const Content = styled.div`
 
   button {
     margin-top: 30px;
-    width: 300px;
+    width: 400px;
     height: 45px;
     background: #F67280;
     border: none;
@@ -100,7 +100,7 @@ export const Content = styled.div`
   }
 
   p {
-    width: 100%;
+    width: 400px;
     text-align: center;
   }
 `;
